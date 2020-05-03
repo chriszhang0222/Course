@@ -1,4 +1,11 @@
 <template>
+    <div>
+        <p>
+    <button v-on:click="list()" href="#" class="btn btn-app btn-success">
+        <i class="ace-icon fa fa-refresh"></i>
+        Reload
+    </button></p>
+
     <table id="simple-table" class="table  table-bordered table-hover">
                 <thead>
                 <tr>
@@ -30,6 +37,7 @@
 
                 </tbody>
             </table>
+    </div>
 </template>
 
 <script>
