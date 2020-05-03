@@ -48,10 +48,14 @@
         methods: {
             list(){
                 let _this = this;
-                _this.$ajax.get('http://127.0.0.1:9002/business/chapter/list')
+                //TODO: refactor url to gateway
+                _this.$ajax.post('http://127.0.0.1:9002/business/chapter/list', {
+                    page:1,
+                    size:1
+                })
                     .then((res) => {
                         console.log(res);
-                        _this.chapters = res.data;
+                        _this.chapters = res.data.list;
                     })
             }
         }
