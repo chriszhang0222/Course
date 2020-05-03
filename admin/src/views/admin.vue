@@ -354,7 +354,7 @@
 
             <ul class="nav nav-list">
                 <li class="" id="welcome-sidebar">
-                    <router-link to="/admin/welcome">
+                    <router-link to="/welcome">
                         <i class="menu-icon fa fa-tachometer"></i>
                         <span class="menu-text">DashBoard</span>
                     </router-link>
@@ -382,7 +382,7 @@
                         </li>
 
                         <li class="" id="system-resource-sidebar">
-                            <router-link to="/admin/system/resource">
+                            <router-link to="/system/resource">
                                 <i class="menu-icon fa fa-caret-right"></i>
                                 Resources Management
                             </router-link>
@@ -413,7 +413,7 @@
 
                     <ul class="submenu">
                         <li class="" id="business-chapter-sidebar">
-                            <router-link to="/admin/business/chapter">
+                            <router-link to="/business/chapter">
                                 <i class="menu-icon fa fa-caret-right"></i>
                                 Chapter Management
                             </router-link>
@@ -951,7 +951,24 @@
         mounted:function(){
             $('body').attr('class', 'no-skin');
         },
+        watch: {
+            $route: {
+                handler:function(val, oldVal){
+                    // sidebar激活样式方法二
+                    console.log("---->页面跳转：", val, oldVal);
+                    let _this = this;
 
+                    // if (!_this.hasResourceRouter(val.name)) {
+                    //     _this.$router.push("/login");
+                    //     return;
+                    // }
+
+                    _this.$nextTick(function(){  //页面加载完成后执行
+                        _this.activeSidebar(_this.$route.name.replace("/", "-") + "-sidebar");
+                    })
+                }
+            }
+        },
         methods: {
             activeSidebar: function (id) {
                 // 兄弟菜单去掉active样式，自身增加active样式

@@ -13,14 +13,14 @@ export default new Router({
     routes:[
         {path:'*',redirect:"/login"},
         {path:'/login', component:Login},
-        {path:'/admin', component:Admin,
+        {path:'/',name:"admin", component:Admin,
         children:[
             {
-            path: 'welcome',
+            path: 'welcome', name:'welcome',
             component: Welcome
             },
 
-            {path: 'business/chapter',
+            {path: 'business/chapter', name:'business/chapter',
             component: Chapter
             }
         ]
