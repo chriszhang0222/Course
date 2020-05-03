@@ -353,13 +353,74 @@
             </div><!-- /.sidebar-shortcuts -->
 
             <ul class="nav nav-list">
-                <li class="">
-                    <a href="index.html">
+                <li class="" id="welcome-sidebar">
+                    <router-link to="/admin/welcome">
                         <i class="menu-icon fa fa-tachometer"></i>
-                        <span class="menu-text"> Dashboard </span>
+                        <span class="menu-text">DashBoard</span>
+                    </router-link>
+
+                    <b class="arrow"></b>
+                </li>
+                <li class="">
+                    <a href="#" class="dropdown-toggle">
+                        <i class="menu-icon fa fa-list"></i>
+                        <span class="menu-text">System</span>
+
+                        <b class="arrow fa fa-angle-down"></b>
                     </a>
 
                     <b class="arrow"></b>
+
+                    <ul class="submenu">
+                        <li class="" id="system-user-sidebar">
+                            <router-link to="/system/user">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                User Management
+                            </router-link>
+
+                            <b class="arrow"></b>
+                        </li>
+
+                        <li class="" id="system-resource-sidebar">
+                            <router-link to="/admin/system/resource">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Resources Management
+                            </router-link>
+
+                            <b class="arrow"></b>
+                        </li>
+
+                        <li class="" id="system-role-sidebar">
+                            <router-link to="/business/chapter">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Character Management
+                            </router-link>
+
+                            <b class="arrow"></b>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="">
+                    <a href="#" class="dropdown-toggle">
+                        <i class="menu-icon fa fa-list"></i>
+                        <span class="menu-text">Business</span>
+
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+
+                    <b class="arrow"></b>
+
+                    <ul class="submenu">
+                        <li class="" id="business-chapter-sidebar">
+                            <router-link to="/admin/business/chapter">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Chapter Management
+                            </router-link>
+
+                            <b class="arrow"></b>
+                        </li>
+                    </ul>
                 </li>
 
                 <li class="">
@@ -768,68 +829,68 @@
                     </ul>
                 </li>
 
-                <li class="active open">
-                    <a href="#" class="dropdown-toggle">
-                        <i class="menu-icon fa fa-file-o"></i>
+                <!--<li class="active open">-->
+                    <!--<a href="#" class="dropdown-toggle">-->
+                        <!--<i class="menu-icon fa fa-file-o"></i>-->
 
-                        <span class="menu-text">
-								Other Pages
+                        <!--<span class="menu-text">-->
+								<!--Other Pages-->
 
-								<span class="badge badge-primary">5</span>
-							</span>
+								<!--<span class="badge badge-primary">5</span>-->
+							<!--</span>-->
 
-                        <b class="arrow fa fa-angle-down"></b>
-                    </a>
+                        <!--<b class="arrow fa fa-angle-down"></b>-->
+                    <!--</a>-->
 
-                    <b class="arrow"></b>
+                    <!--<b class="arrow"></b>-->
 
-                    <ul class="submenu">
-                        <li class="">
-                            <a href="faq.html">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                FAQ
-                            </a>
+                    <!--<ul class="submenu">-->
+                        <!--<li class="">-->
+                            <!--<a href="faq.html">-->
+                                <!--<i class="menu-icon fa fa-caret-right"></i>-->
+                                <!--FAQ-->
+                            <!--</a>-->
 
-                            <b class="arrow"></b>
-                        </li>
+                            <!--<b class="arrow"></b>-->
+                        <!--</li>-->
 
-                        <li class="">
-                            <a href="error-404.html">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                Error 404
-                            </a>
+                        <!--<li class="">-->
+                            <!--<a href="error-404.html">-->
+                                <!--<i class="menu-icon fa fa-caret-right"></i>-->
+                                <!--Error 404-->
+                            <!--</a>-->
 
-                            <b class="arrow"></b>
-                        </li>
+                            <!--<b class="arrow"></b>-->
+                        <!--</li>-->
 
-                        <li class="">
-                            <a href="error-500.html">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                Error 500
-                            </a>
+                        <!--<li class="">-->
+                            <!--<a href="error-500.html">-->
+                                <!--<i class="menu-icon fa fa-caret-right"></i>-->
+                                <!--Error 500-->
+                            <!--</a>-->
 
-                            <b class="arrow"></b>
-                        </li>
+                            <!--<b class="arrow"></b>-->
+                        <!--</li>-->
 
-                        <li class="">
-                            <a href="grid.html">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                Grid
-                            </a>
+                        <!--<li class="">-->
+                            <!--<a href="grid.html">-->
+                                <!--<i class="menu-icon fa fa-caret-right"></i>-->
+                                <!--Grid-->
+                            <!--</a>-->
 
-                            <b class="arrow"></b>
-                        </li>
+                            <!--<b class="arrow"></b>-->
+                        <!--</li>-->
 
-                        <li class="active">
-                            <a href="blank.html">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                Blank Page
-                            </a>
+                        <!--<li class="active">-->
+                            <!--<a href="blank.html">-->
+                                <!--<i class="menu-icon fa fa-caret-right"></i>-->
+                                <!--Blank Page-->
+                            <!--</a>-->
 
-                            <b class="arrow"></b>
-                        </li>
-                    </ul>
-                </li>
+                            <!--<b class="arrow"></b>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
             </ul><!-- /.nav-list -->
 
             <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
@@ -889,6 +950,23 @@
         name: "admin",
         mounted:function(){
             $('body').attr('class', 'no-skin');
+        },
+
+        methods: {
+            activeSidebar: function (id) {
+                // 兄弟菜单去掉active样式，自身增加active样式
+                $("#" + id).siblings().removeClass("active");
+                $("#" + id).siblings().find("li").removeClass("active");
+                $("#" + id).addClass("active");
+
+                // 如果有父菜单，父菜单的兄弟菜单去掉open active，父菜单增加open active
+                let parentLi = $("#" + id).parents("li");
+                if (parentLi) {
+                    parentLi.siblings().removeClass("open active");
+                    parentLi.siblings().find("li").removeClass("active");
+                    parentLi.addClass("open active");
+                }
+            },
         }
     }
 </script>
