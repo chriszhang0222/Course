@@ -88,8 +88,14 @@
 <script>
     $('body').attr('class', 'login-layout light-login');
     export default {
-        name: "login"
+        name: "login",
+        methods:{
+            login(){
+                this.$router.push("/admin")
+            }
+        }
     }
+
 </script>
 
 <style scoped>
