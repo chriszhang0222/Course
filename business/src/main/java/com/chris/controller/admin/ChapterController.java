@@ -6,6 +6,7 @@ import com.chris.dto.ChapterDto;
 import com.chris.dto.PageDto;
 import com.chris.service.ChapterService;
 import com.chris.util.CommonResponse;
+import com.chris.util.ValidatorUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.jaxb.SpringDataJaxb;
@@ -34,6 +35,9 @@ public class ChapterController {
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public ChapterDto save(@RequestBody ChapterDto chapterDto){
+        ValidatorUtil.require(chapterDto.getName(), "Name");
+        ValidatorUtil.require(chapterDto.getCourseId(), "CourseID");
+        ValidatorUtil.length(chapterDto.getCourseId(), "CourseID", 1, 8);
         log.info("chapterDto:{}", JSON.toJSONString(chapterDto));
         chapterService.insert(chapterDto);
         return chapterDto;

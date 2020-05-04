@@ -101,11 +101,13 @@
             list(page){
                 let _this = this;
                 //TODO: refactor url to gateway
+                Loading.show()
                 _this.$ajax.post('http://127.0.0.1:9002/business/chapter/list', {
                     page:page,
                     size:_this.$refs.pagination.size
                 })
                     .then((res) => {
+                        Loading.hide()
                         console.log(res);
                         _this.chapters = res.data.content.list;
                         _this.$refs.pagination.render(page, res.data.content.total)
@@ -113,12 +115,20 @@
             },
             save(){
                 let _this = this;
+                if(!Validator.require(_this.chapter.name, "Name")
+                || !Validator.require(_this.chapter.courseId, "CourseId")
+                || !Validator.require(_this.chapter.vourseId, "CourseId")){
+                    return;
+                }
                 _this.$ajax.post('http://127.0.0.1:9002/business/chapter/save', _this.chapter)
                     .then((res) => {
                         console.log(res);
                         if(res.data.success){
                             $("#form-modal").modal("hide");
                             _this.list(1)
+                            Toast.success("Save successfully");
+                        }else{
+                            Toast.warning(res.data.message)
                         }
                     })
             },
@@ -145,6 +155,7 @@
                                 console.log(res);
                                 let resp = res.data
                                 if(resp.success){
+                                    Toast.success("Delete successfully");
                                     _this.list(1)
                                 }
                             })
