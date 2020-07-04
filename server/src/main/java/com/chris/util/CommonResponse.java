@@ -1,7 +1,10 @@
 package com.chris.util;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 /**
  * @Author: Chris Zhang
@@ -9,7 +12,8 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-public class CommonResponse<T> {
+@AllArgsConstructor
+public class CommonResponse<T> implements Serializable {
 
     private boolean success = true;
     private String code;
@@ -19,6 +23,12 @@ public class CommonResponse<T> {
     public CommonResponse(String code, String message){
         this.code = code;
         this.message = message;
+    }
+
+    public CommonResponse(String code, String message, T content){
+        this.code = code;
+        this.message = message;
+        this.content = content;
     }
 
 }

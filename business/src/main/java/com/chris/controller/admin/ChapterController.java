@@ -7,11 +7,17 @@ import com.chris.dto.PageDto;
 import com.chris.service.ChapterService;
 import com.chris.util.CommonResponse;
 import com.chris.util.ValidatorUtil;
+import jdk.nashorn.internal.objects.annotations.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.jaxb.SpringDataJaxb;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -23,15 +29,36 @@ import java.util.List;
 @Slf4j
 public class ChapterController {
 
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    class Car{
+        String brand;
+        String name;
+        String price;
+
+    }
+
     @Autowired
     private ChapterService chapterService;
-
 
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     public PageDto getChapterList(@RequestBody PageDto pageDto){
         chapterService.list(pageDto);
         return pageDto;
     }
+
+    @GetMapping(value="/test")
+    public CommonResponse<String> getMapping(){
+        return new CommonResponse<String>("200", "OK", "Hello World");
+    }
+
+    @GetMapping("/hello")
+    public List<String> getList(){
+        List<String> lst = new ArrayList<>(Arrays.asList(new String[]{"Ok", "Fine"}));
+        return lst;
+    }
+
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public ChapterDto save(@RequestBody ChapterDto chapterDto){
