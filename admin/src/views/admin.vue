@@ -362,7 +362,7 @@
                 </li>
                 <li class="">
                     <a href="#" class="dropdown-toggle">
-                        <i class="menu-icon fa fa-list"></i>
+                        <i class="menu-icon fa fa-bar-chart"></i>
                         <span class="menu-text">System</span>
 
                         <b class="arrow fa fa-angle-down"></b>
@@ -402,7 +402,7 @@
 
                 <li class="">
                     <a href="#" class="dropdown-toggle">
-                        <i class="menu-icon fa fa-list"></i>
+                        <i class="menu-icon fa fa-database"></i>
                         <span class="menu-text">Business</span>
 
                         <b class="arrow fa fa-angle-down"></b>

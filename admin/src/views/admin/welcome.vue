@@ -1,19 +1,23 @@
 <template>
     <div>
-        <h1>Hello</h1>
-        <alertBox class="alert-success" color="green"></alertBox>
+        <pageHeader title="Dashboard" content="overview"> Overview</pageHeader>
+        <alertBox class="alert-success" color="green">
+            Thank you for your visiting!
+        </alertBox>
     </div>
 </template>
 
 <script>
     import alertBox from "../../components/alertBox";
+    import pageHeader from "../../components/pageHeader";
     export default {
         name: "welcome",
         mounted:function(){
 
         },
         components:{
-            alertBox
+            alertBox,
+            pageHeader
         }
     }
 </script>
