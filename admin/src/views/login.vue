@@ -42,14 +42,14 @@
                                                 </label>
 
                                                 <label class="block clearfix">
-                      <span class="block input-icon input-icon-right">
-                        <div class="input-group">
-                          <input  type="text" class="form-control" placeholder="验证码">
-                          <span class="input-group-addon" id="basic-addon2">
-                            <img v-on:click="loadImageCode()" id="image-code" alt="验证码"/>
-                          </span>
-                        </div>
-                      </span>
+<!--                      <span class="block input-icon input-icon-right">-->
+<!--                        <div class="input-group">-->
+<!--                          <input  type="text" class="form-control" placeholder="验证码">-->
+<!--                          <span class="input-group-addon" id="basic-addon2">-->
+<!--                            <img v-on:click="loadImageCode()" id="image-code" alt="验证码"/>-->
+<!--                          </span>-->
+<!--                        </div>-->
+<!--                      </span>-->
                                                 </label>
 
                                                 <div class="space"></div>
@@ -86,12 +86,11 @@
 </template>
 
 <script>
-    $('body').attr('class', 'login-layout light-login');
     export default {
         name: "login",
         mounted:function(){
             $('body').removeClass('no-skin');
-            $('body').attr('class', 'login-layout light-login');
+            $('body').attr('class', 'login-layout blur-login');
         },
         methods:{
             login(){

@@ -22,7 +22,7 @@ export default new Router({
 
             {path: 'business/chapter', name:'business/chapter',
             component: Chapter
-            }
+            },
         ]
         },
     ]
