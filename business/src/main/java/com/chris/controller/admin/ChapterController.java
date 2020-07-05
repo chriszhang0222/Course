@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.jaxb.SpringDataJaxb;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -39,7 +40,7 @@ public class ChapterController {
 
     }
 
-    @Autowired
+    @Resource
     private ChapterService chapterService;
 
     @RequestMapping(value = "/list", method = RequestMethod.POST)

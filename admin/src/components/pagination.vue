@@ -29,7 +29,7 @@
         &nbsp;
         <span class="m--padding-10">
         Each Page
-        <select v-model="size">
+        <select v-model="size" v-on:change="reload">
             <option value="1">1</option>
             <option value="5">5</option>
             <option value="10">10</option>
@@ -93,6 +93,10 @@
                         _this.list(page);
                     }
                 }
+            },
+
+            reload(){
+                this.$parent.list();
             },
 
             /**
