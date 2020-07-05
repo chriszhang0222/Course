@@ -1,5 +1,6 @@
 <template>
     <div>
+        <pageHeader title="Chapter View">chapter</pageHeader>
     <p>
         <button v-on:click="add()" class="btn btn-app btn-success">
             <i class="ace-icon fa fa-edit"></i>
@@ -78,8 +79,9 @@
 
 <script>
     import Pagination from '../../components/pagination.vue'
+    import pageHeader from "../../components/pageHeader";
     export default {
-        components: {Pagination},
+        components: {Pagination, pageHeader},
         name: "chapter",
         data: function () {
             return {
@@ -102,7 +104,7 @@
                 let _this = this;
                 //TODO: refactor url to gateway
                 Loading.show()
-                _this.$ajax.post('http://127.0.0.1:9002/business/chapter/list', {
+                _this.$ajax.post('http://127.0.0.1:9002/business/admin/chapter/list', {
                     page:page,
                     size:_this.$refs.pagination.size
                 })

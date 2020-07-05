@@ -25,7 +25,7 @@ import java.util.List;
  * @Date: 5/3/20 10:34
  */
 @RestController
-@RequestMapping("/chapter")
+@RequestMapping("/admin/chapter")
 @Slf4j
 public class ChapterController {
 

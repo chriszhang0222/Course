@@ -419,6 +419,14 @@
 
                             <b class="arrow"></b>
                         </li>
+                        <li class="" id="business-section-sidebar">
+                            <a href="" class="dropdown-toggle">
+                                <i class="menu-icon fa fa-caret-right">
+                                </i>
+                                Section Management
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
                     </ul>
                 </li>
 
@@ -1034,18 +1042,13 @@
         mounted:function(){
             $('body').removeClass('login-layout light-login');
             $('body').attr('class', 'no-skin');
+            this.activeSidebar(this.$route.name.replace("/", "-") + "-sidebar");
         },
         watch: {
             $route: {
                 handler:function(val, oldVal){
                     // sidebar激活样式方法二
-                    console.log("---->页面跳转：", val, oldVal);
                     let _this = this;
-
-                    // if (!_this.hasResourceRouter(val.name)) {
-                    //     _this.$router.push("/login");
-                    //     return;
-                    // }
 
                     _this.$nextTick(function(){  //页面加载完成后执行
                         _this.activeSidebar(_this.$route.name.replace("/", "-") + "-sidebar");

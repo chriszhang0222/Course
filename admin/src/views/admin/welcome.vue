@@ -13,7 +13,6 @@
     export default {
         name: "welcome",
         mounted:function(){
-
         },
         components:{
             alertBox,
