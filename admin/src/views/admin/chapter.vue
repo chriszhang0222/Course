@@ -102,7 +102,7 @@
                 let _this = this;
                 //TODO: refactor url to gateway
                 Loading.show()
-                _this.$ajax.post('http://127.0.0.1:9002/business/admin/chapter/list', {
+                _this.$ajax.post(process.env.VUE_APP_SERVER+'/business/admin/chapter/list', {
                     page:page,
                     size:_this.$refs.pagination.size
                 })
@@ -120,7 +120,7 @@
                 || !Validator.require(_this.chapter.vourseId, "CourseId")){
                     return;
                 }
-                _this.$ajax.post('http://127.0.0.1:9002/business/chapter/save', _this.chapter)
+                _this.$ajax.post(process.env.VUE_APP_SERVER+'/business/chapter/save', _this.chapter)
                     .then((res) => {
                         console.log(res);
                         if(res.data.success){
@@ -150,7 +150,7 @@
                     confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
                     if (result.value) {
-                        _this.$ajax.delete('http://127.0.0.1:9002/business/chapter/delete/'+id)
+                        _this.$ajax.delete(process.env.VUE_APP_SERVER+'/business/chapter/delete/'+id)
                             .then((res) => {
                                 console.log(res);
                                 let resp = res.data
