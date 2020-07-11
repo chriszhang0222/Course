@@ -1,6 +1,6 @@
 <template>
     <div>
-        <page-header title="Course Page View">course</page-header>
+        <PageHeader title="Course Page View">course</PageHeader>
         <p>
             <button v-on:click="add()" class="btn btn-white btn-default btn-round">
                 <i class="ace-icon fa fa-edit"></i>
