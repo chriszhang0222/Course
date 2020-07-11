@@ -2,12 +2,12 @@
     <div>
         <pageHeader title="Chapter View">chapter</pageHeader>
         <p>
-            <button v-on:click="add()" class="btn btn-app btn-success">
+            <button v-on:click="add()" class="btn btn-app btn-pink btn-xs radius-4">
                 <i class="ace-icon fa fa-edit"></i>
                 New
             </button>
             &nbsp;
-            <button v-on:click="list(1)" class="btn btn-app btn-success">
+            <button v-on:click="list(1)" class="btn btn-app btn-pink btn-xs radius-4">
                 <i class="ace-icon fa fa-refresh"></i>
                 Reload
             </button>
