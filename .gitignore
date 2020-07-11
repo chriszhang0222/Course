@@ -29,4 +29,4 @@ build/
 ### VS Code ###
 .vscode/
 ../.DS_Store
-admin/public/ace
+admin/public/ace/
