@@ -4,6 +4,7 @@ import router from './router'
 import axios from 'axios';
 import upperFirst from 'lodash/upperFirst'
 import camelCase from 'lodash/camelCase'
+import filter from './filter/filter'
 Vue.config.productionTip = false;
 Vue.prototype.$ajax = axios;
 
@@ -41,10 +42,9 @@ requireComponent.keys().forEach(fileName => {
     )
 })
 
-// new Vue({
-//     router,
-//   render: h => h(App),
-// }).$mount('#app');
+Object.keys(filter).forEach(key => {
+    Vue.filter(key, filter[key])
+});
 
 new Vue({
     el: '#app',

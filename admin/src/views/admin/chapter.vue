@@ -29,7 +29,7 @@
                         <td>
                             <div class="hidden-sm hidden-xs btn-group">
                                 <button v-on:click="toSection(chapter)" class="btn btn-white btn-xs btn-info btn-round">
-                                    小节
+                                    Section
                                 </button>&nbsp;
                                 <button v-on:click="edit(chapter)" class="btn btn-white btn-xs btn-info btn-round">
                                     Edit
@@ -93,6 +93,11 @@
             _this.list(1);
         },
         methods: {
+            toSection(chapter){
+              let vm = this;
+              SessionStorage.set(SESSION_KEY_CHAPTER, chapter);
+              vm.$router.push('/business/section');
+            },
             add(){
                 let _this = this;
                 _this.chapter = {};
