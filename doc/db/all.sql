@@ -32,3 +32,21 @@ create table `section`(
 
 insert into `section` (id, title, course_id, chapter_id, video, time, charge, sort, create_at, update_at)
     VALUES ('0000003','test section 3', '0000003','0000000','',500,'F',1,now(), now());
+
+drop table if exists `course`;
+create table `course`(
+    `id` CHAR(8) not null default '' comment 'ID',
+    name varchar(50) not null comment 'course_name',
+    summary varchar(2000) comment 'summary',
+    time int default 0,
+    price decimal(8, 2) not null default 0.00,
+    image varchar(100),
+    level char(1) not null ,
+    charge char(1),
+    status char(1),
+    enroll integer default 0,
+    sort int,
+    create_at datetime(3),
+    update_at datetime(3),
+    primary key (id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
