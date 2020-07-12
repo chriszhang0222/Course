@@ -229,7 +229,7 @@
                     confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
                     if (result.value) {
-                        vm.$ajax.delete(vm.url+'/business/section/delete/'+id)
+                        vm.$ajax.delete(vm.url+'/business/admin/section/delete/'+id)
                             .then((res) => {
                                 console.log(res);
                                 let resp = res.data

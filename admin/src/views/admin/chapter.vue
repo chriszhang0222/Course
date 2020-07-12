@@ -125,7 +125,7 @@
                 || !Validator.require(_this.chapter.vourseId, "CourseId")){
                     return;
                 }
-                _this.$ajax.post(process.env.VUE_APP_SERVER+'/business/chapter/save', _this.chapter)
+                _this.$ajax.post(process.env.VUE_APP_SERVER+'/business/admin/chapter/save', _this.chapter)
                     .then((res) => {
                         console.log(res);
                         if(res.data.success){
@@ -155,7 +155,7 @@
                     confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
                     if (result.value) {
-                        _this.$ajax.delete(process.env.VUE_APP_SERVER+'/business/chapter/delete/'+id)
+                        _this.$ajax.delete(process.env.VUE_APP_SERVER+'/business/admin/chapter/delete/'+id)
                             .then((res) => {
                                 console.log(res);
                                 let resp = res.data
