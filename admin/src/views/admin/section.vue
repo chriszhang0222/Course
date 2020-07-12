@@ -192,9 +192,59 @@
                     vm.$refs.pagination.render(page, res.data.content.total)
                 })
             },
-            save(page){
+            save() {
                 let vm = this;
-
+                vm.section.video = "";
+                let section = vm.section;
+                if (!Validator.require(section.title, "Title")
+                    || !Validator.length(section.title, "title", 1, 50)
+                ) {
+                    return;
+                }
+                section.chapterId = vm.chapter.id;
+                Loading.show();
+                let url = vm.url;
+                console.log(section);
+                vm.$ajax.post(url + '/business/admin/section/save', section)
+                    .then((res) => {
+                        Loading.hide();
+                        if (res.data.success) {
+                            $("#form-modal").modal("hide");
+                            vm.list(1);
+                            Toast.success("Save successfully!");
+                        } else {
+                            Toast.warning(res.data.message)
+                        }
+                    })
+            },
+            del(id){
+                let vm = this;
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
+                        vm.$ajax.delete(vm.url+'/business/section/delete/'+id)
+                            .then((res) => {
+                                console.log(res);
+                                let resp = res.data
+                                if(resp.success){
+                                    Toast.success("Delete successfully");
+                                    vm.list(1)
+                                }
+                            })
+                        Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        )
+                    }
+                });
             }
         }
     }

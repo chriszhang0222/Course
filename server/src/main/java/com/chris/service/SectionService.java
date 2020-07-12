@@ -7,13 +7,17 @@ import com.chris.dto.PageDto;
 import com.chris.dto.SectionDto;
 import com.chris.dto.subpagedto.SectionPageDto;
 import com.chris.mapper.SectionMapper;
+import com.chris.util.UuidUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,5 +44,33 @@ public class SectionService {
             return sectionDto;
         }).collect(Collectors.toList());
         pageDto.setList(dtoList);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void save(SectionDto sectionDto){
+        Section section = new Section();
+        BeanUtils.copyProperties(sectionDto, section);
+        if(StringUtils.isEmpty(section.getId())){
+            insert(section);
+        }else{
+            update(section);
+        }
+    }
+
+    private void insert(Section section){
+        Date now = new Date();
+        section.setCreateAt(now);
+        section.setUpdateAt(now);
+        section.setId(UuidUtil.getShortUuid());
+        sectionMapper.insert(section);
+    }
+
+    private void update(Section section){
+        section.setUpdateAt(new Date());
+        sectionMapper.updateByPrimaryKey(section);
+    }
+
+    public void delete(String id){
+        sectionMapper.deleteByPrimaryKey(id);
     }
 }
