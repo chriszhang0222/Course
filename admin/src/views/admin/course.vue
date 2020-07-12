@@ -1,6 +1,6 @@
 <template>
     <div>
-        <PageHeader title="Course Page View">course</PageHeader>
+        <pageHeader title="Course Page View">course</pageHeader>
         <p>
             <button v-on:click="add()" class="btn btn-white btn-default btn-round">
                 <i class="ace-icon fa fa-edit"></i>
@@ -228,11 +228,11 @@
 </template>
 
 <script>
-    import Pagination from '../../components/pagination'
-    import PageHeader from "../../components/pageHeader";
+    import pagination from '../../components/pagination'
+    import pageHeader from "../../components/pageHeader";
     export default {
         name: "business-course",
-        components: {PageHeader, Pagination},
+        components: {pageHeader, pagination},
         data: function(){
             return {
                 course: {},
@@ -277,6 +277,35 @@
                   vm.$refs.pagination.render(page, res.data.content.total);
               })
             },
+            del(id){
+                let vm = this;
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
+                        vm.$ajax.delete(process.env.VUE_APP_SERVER+'/business/admin/course/delete/'+id)
+                            .then((res) => {
+                                console.log(res);
+                                let resp = res.data
+                                if(resp.success){
+                                    Toast.success("Delete successfully");
+                                    vm.list(1)
+                                }
+                            })
+                        Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        )
+                    }
+                });
+            }
         }
     }
 </script>

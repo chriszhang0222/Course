@@ -151,11 +151,11 @@
 </template>
 
 <script>
-    import Pagination from '../../components/pagination.vue'
+    import pagination from '../../components/pagination.vue'
     import pageHeader from "../../components/pageHeader";
     export default {
         name: "business-section",
-        components: { Pagination, pageHeader },
+        components: { pagination,pageHeader },
         data: function(){
           return {
               section: {},
