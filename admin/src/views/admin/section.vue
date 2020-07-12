@@ -245,6 +245,11 @@
                         )
                     }
                 });
+            },
+            edit(section){
+                let vm = this;
+                vm.section = $.extend({}, section);
+                $("#form-modal").modal("show");
             }
         }
     }
