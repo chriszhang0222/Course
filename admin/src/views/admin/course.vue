@@ -20,13 +20,13 @@
                     <img v-show="course.image" class="media-object" v-bind:src="course.image" />
                     <div class="caption">
                         <div class="clearfix">
-                            <span class="pull-right label label-primary info-label">
+                            <span class="pull-right label label-success arrowed-in arrowed-in-right">
                                 {{COURSE_LEVEL | optionKV(course.level)}}
                             </span>
-                            <span class="pull-right label label-primary info-label">
+                            <span class="pull-right label label-success arrowed-in arrowed-in-right">
                                 {{COURSE_CHARGE | optionKV(course.charge)}}
                             </span>
-                            <span class="pull-right label label-primary info-label">
+                            <span class="pull-right label label-success arrowed-in arrowed-in-right">
                                 {{COURSE_STATUS | optionKV(course.status)}}
                           </span>
                         </div>
@@ -53,19 +53,19 @@
                         </p>
                         <p>
                             <button v-on:click="toChapter(course)" class="btn btn-white btn-xs btn-info btn-round">
-                                大章
+                                chapter
                             </button>&nbsp;
                             <button v-on:click="toContent(course)" class="btn btn-white btn-xs btn-info btn-round">
-                                内容
+                                content
                             </button>&nbsp;
                             <button v-on:click="openSortModal(course)" class="btn btn-white btn-xs btn-info btn-round">
-                                排序
+                                sort
                             </button>&nbsp;
                             <button v-on:click="edit(course)" class="btn btn-white btn-xs btn-info btn-round">
-                                编辑
+                                edit
                             </button>&nbsp;
                             <button v-on:click="del(course.id)" class="btn btn-white btn-xs btn-warning btn-round">
-                                删除
+                                delete
                             </button>
                         </p>
                     </div>
@@ -259,6 +259,11 @@
             vm.list(1);
         },
         methods:{
+            toChapter(course){
+              let vm = this;
+              SessionStorage.set(SESSION_KEY_COURSE, course);
+              vm.$router.push('/business/chapter');
+            },
             add(){
 
             },
@@ -311,5 +316,13 @@
 </script>
 
 <style scoped>
+    .caption h3 {
+        font-size: 20px;
+    }
 
+    @media (max-width: 1199px) {
+        .caption h3 {
+            font-size: 16px;
+        }
+    }
 </style>

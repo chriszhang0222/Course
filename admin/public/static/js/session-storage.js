@@ -12,6 +12,14 @@ SessionStorage = {
     set: function (key, data) {
         sessionStorage.setItem(key, JSON.stringify(data));
     },
+    pop: function(key){
+      let v = sessionStorage.getItem(key)
+      if(v && typeof(v) !== 'undefined' && v !== 'undefined'){
+          sessionStorage.removeItem(key);
+          return v;
+      }
+      return null;
+    },
     remove: function (key) {
         sessionStorage.removeItem(key);
     },

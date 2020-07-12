@@ -4,6 +4,7 @@ import com.chris.domain.Chapter;
 import com.chris.domain.ChapterExample;
 import com.chris.dto.ChapterDto;
 import com.chris.dto.PageDto;
+import com.chris.dto.subpagedto.ChapterPageDto;
 import com.chris.mapper.ChapterMapper;
 import com.chris.util.UuidUtil;
 import com.github.pagehelper.PageHelper;
@@ -29,9 +30,13 @@ public class ChapterService {
     @Resource
     private ChapterMapper chapterMapper;
 
-    public void list(PageDto pageDto){
+    public void list(ChapterPageDto pageDto){
         PageHelper.startPage(pageDto.getPage(),pageDto.getSize());
         ChapterExample example = new ChapterExample();
+        ChapterExample.Criteria criteria = example.createCriteria();
+        if(!StringUtils.isEmpty(pageDto.getCourseId())){
+            criteria.andCourseIdEqualTo(pageDto.getCourseId());
+        }
         List<Chapter> chapters = chapterMapper.selectByExample(example);
         PageInfo<Chapter> pageInfo= new PageInfo<>(chapters);
         pageDto.setTotal(pageInfo.getTotal());

@@ -1,6 +1,10 @@
 <template>
     <div>
         <pageHeader title="Chapter View">chapter</pageHeader>
+        <h4 class="lighter">
+            <i class="ace-icon fa fa-hand-o-right icon-animated-hand-pointer blue"></i>
+            <router-link to="/business/course" class="pink"> {{course.name}} </router-link>
+        </h4>
         <p>
             <button v-on:click="add()" class="btn btn-app btn-pink btn-xs radius-4">
                 <i class="ace-icon fa fa-edit"></i>
@@ -18,6 +22,7 @@
                     <tr>
                         <th class="detail-col">ID</th>
                         <th>Name</th>
+                        <th>Course ID</th>
                         <th>Operation</th>
                     </tr>
                 </thead>
@@ -26,6 +31,7 @@
                     <tr v-for="chapter in chapters">
                         <td>{{chapter.id}}</td>
                         <td>{{chapter.name}}</td>
+                        <td>{{chapter.courseId}}</td>
                         <td>
                             <div class="hidden-sm hidden-xs btn-group">
                                 <button v-on:click="toSection(chapter)" class="btn btn-white btn-xs btn-info btn-round">
@@ -76,21 +82,27 @@
 </template>
 
 <script>
-    import Pagination from '../../components/pagination.vue'
+    import pagination from '../../components/pagination.vue'
     import pageHeader from "../../components/pageHeader";
     export default {
-        components: {Pagination, pageHeader},
+        components: {pagination, pageHeader},
         name: "chapter",
         data: function () {
             return {
                 chapters:[],
-                chapter:{}
+                chapter:{},
+                course: {}
             }
         },
         mounted:function(){
 
-            let _this = this;
-            _this.list(1);
+            let vm = this;
+            let course = SessionStorage.get(SESSION_KEY_COURSE) || {}
+            if(Tool.isEmpty(course)){
+                vm.$router.push("/welcome");
+            }
+            vm.course = course;
+            vm.list(1);
         },
         methods: {
             toSection(chapter){
@@ -109,11 +121,11 @@
                 Loading.show()
                 _this.$ajax.post(process.env.VUE_APP_SERVER+'/business/admin/chapter/list', {
                     page:page,
-                    size:_this.$refs.pagination.size
+                    size:_this.$refs.pagination.size,
+                    courseId: _this.course.id
                 })
                     .then((res) => {
                         Loading.hide()
-                        console.log(res);
                         _this.chapters = res.data.content.list;
                         _this.$refs.pagination.render(page, res.data.content.total)
                     })

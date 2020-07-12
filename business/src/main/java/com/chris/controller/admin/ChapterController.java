@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.chris.domain.Chapter;
 import com.chris.dto.ChapterDto;
 import com.chris.dto.PageDto;
+import com.chris.dto.subpagedto.ChapterPageDto;
 import com.chris.service.ChapterService;
 import com.chris.util.CommonResponse;
 import com.chris.util.ValidatorUtil;
@@ -44,7 +45,7 @@ public class ChapterController {
     private ChapterService chapterService;
 
     @RequestMapping(value = "/list", method = RequestMethod.POST)
-    public PageDto getChapterList(@RequestBody PageDto pageDto){
+    public ChapterPageDto getChapterList(@RequestBody ChapterPageDto pageDto){
         chapterService.list(pageDto);
         return pageDto;
     }
