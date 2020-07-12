@@ -33,7 +33,7 @@ public class SectionController {
 
     @DeleteMapping("/delete/{id}")
     public CommonResponse delete(@PathVariable String id){
-        CommonResponse response = new CommonResponse();
+        CommonResponse response = new CommonResponse("200", "OK");
         sectionService.delete(id);
         return response;
     }

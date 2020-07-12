@@ -90,21 +90,21 @@
                                     <ul id="tree" class="ztree"></ul>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">封面</label>
-                                <div class="col-sm-10">
-                                    <big-file v-bind:input-id="'image-upload'"
-                                              v-bind:text="'上传封面'"
-                                              v-bind:suffixs="['jpg', 'jpeg', 'png']"
-                                              v-bind:use="FILE_USE.COURSE.key"
-                                              v-bind:after-upload="afterUpload"></big-file>
-                                    <div v-show="course.image" class="row">
-                                        <div class="col-md-6">
-                                            <img v-bind:src="course.image" class="img-responsive">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+<!--                            <div class="form-group">-->
+<!--                                <label class="col-sm-2 control-label">封面</label>-->
+<!--                                <div class="col-sm-10">-->
+<!--                                    <big-file v-bind:input-id="'image-upload'"-->
+<!--                                              v-bind:text="'上传封面'"-->
+<!--                                              v-bind:suffixs="['jpg', 'jpeg', 'png']"-->
+<!--                                              v-bind:use="FILE_USE.COURSE.key"-->
+<!--                                              v-bind:after-upload="afterUpload"></big-file>-->
+<!--                                    <div v-show="course.image" class="row">-->
+<!--                                        <div class="col-md-6">-->
+<!--                                            <img v-bind:src="course.image" class="img-responsive">-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">名称</label>
                                 <div class="col-sm-10">
@@ -183,46 +183,46 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
-        <div id="course-sort-modal" class="modal fade" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">排序</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form class="form-horizontal">
-                            <div class="form-group">
-                                <label class="control-label col-lg-3">
-                                    当前排序
-                                </label>
-                                <div class="col-lg-9">
-                                    <input class="form-control" v-model="sort.oldSort" name="oldSort" disabled>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-lg-3">
-                                    新排序
-                                </label>
-                                <div class="col-lg-9">
-                                    <input class="form-control" v-model="sort.newSort" name="newSort">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-white btn-default btn-round" data-dismiss="modal">
-                            <i class="ace-icon fa fa-times"></i>
-                            取消
-                        </button>
-                        <button type="button" class="btn btn-white btn-info btn-round" v-on:click="updateSort()">
-                            <i class="ace-icon fa fa-plus blue"></i>
-                            更新排序
-                        </button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
+<!--        <div id="course-sort-modal" class="modal fade" tabindex="-1" role="dialog">-->
+<!--            <div class="modal-dialog" role="document">-->
+<!--                <div class="modal-content">-->
+<!--                    <div class="modal-header">-->
+<!--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+<!--                        <h4 class="modal-title">排序</h4>-->
+<!--                    </div>-->
+<!--                    <div class="modal-body">-->
+<!--                        <form class="form-horizontal">-->
+<!--                            <div class="form-group">-->
+<!--                                <label class="control-label col-lg-3">-->
+<!--                                    当前排序-->
+<!--                                </label>-->
+<!--                                <div class="col-lg-9">-->
+<!--                                    <input class="form-control" v-model="sort.oldSort" name="oldSort" disabled>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="form-group">-->
+<!--                                <label class="control-label col-lg-3">-->
+<!--                                    新排序-->
+<!--                                </label>-->
+<!--                                <div class="col-lg-9">-->
+<!--                                    <input class="form-control" v-model="sort.newSort" name="newSort">-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                    <div class="modal-footer">-->
+<!--                        <button type="button" class="btn btn-white btn-default btn-round" data-dismiss="modal">-->
+<!--                            <i class="ace-icon fa fa-times"></i>-->
+<!--                            取消-->
+<!--                        </button>-->
+<!--                        <button type="button" class="btn btn-white btn-info btn-round" v-on:click="updateSort()">-->
+<!--                            <i class="ace-icon fa fa-plus blue"></i>-->
+<!--                            更新排序-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </div>&lt;!&ndash; /.modal-content &ndash;&gt;-->
+<!--            </div>&lt;!&ndash; /.modal-dialog &ndash;&gt;-->
+<!--        </div>&lt;!&ndash; /.modal &ndash;&gt;-->
 
     </div>
 </template>
@@ -254,6 +254,9 @@
             }
         },
         mounted() {
+            let vm = this;
+            vm.$refs.pagination.size = 5;
+            vm.list(1);
         },
         methods:{
             add(){
@@ -265,6 +268,14 @@
             list(page){
               let vm = this;
               Loading.show();
+              vm.$ajax.post(vm.url + '/business/admin/course/list', {
+                  page: page,
+                  size: vm.$refs.pagination.size
+              }).then((res) => {
+                  Loading.hide();
+                  vm.courses = res.data.content.list;
+                  vm.$refs.pagination.render(page, res.data.content.total);
+              })
             },
         }
     }
