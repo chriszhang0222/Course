@@ -66,7 +66,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Course</label>
                                 <div class="col-sm-10">
-                                    <input v-model="chapter.courseId" class="form-control" placeholder="Course">
+                                    <p class="form-control-static">{{course.name}}</p>
                                 </div>
                             </div>
                         </form>
@@ -132,9 +132,10 @@
             },
             save(){
                 let _this = this;
+                _this.chapter.courseId = _this.course.id;
                 if(!Validator.require(_this.chapter.name, "Name")
                 || !Validator.require(_this.chapter.courseId, "CourseId")
-                || !Validator.require(_this.chapter.vourseId, "CourseId")){
+                ){
                     return;
                 }
                 _this.$ajax.post(process.env.VUE_APP_SERVER+'/business/admin/chapter/save', _this.chapter)

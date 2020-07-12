@@ -50,3 +50,6 @@ create table `course`(
     update_at datetime(3),
     primary key (id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+update course c set `time` = (select sum(`time`) from section where course_id = '000000')
+where c.id = '000000';

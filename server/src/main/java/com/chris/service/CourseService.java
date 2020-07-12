@@ -5,6 +5,7 @@ import com.chris.domain.CourseExample;
 import com.chris.dto.CourseDto;
 import com.chris.dto.subpagedto.CoursePageDto;
 import com.chris.mapper.CourseMapper;
+import com.chris.mapper.my.MyCourseMapper;
 import com.chris.util.UuidUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -26,6 +27,9 @@ public class CourseService {
 
     @Resource
     private CourseMapper courseMapper;
+
+    @Resource
+    private MyCourseMapper myCourseMapper;
 
     public void list(CoursePageDto coursePageDto){
         PageHelper.startPage(coursePageDto.getPage(), coursePageDto.getSize());
@@ -66,5 +70,10 @@ public class CourseService {
 
     public void delete(String id){
         courseMapper.deleteByPrimaryKey(id);
+    }
+
+    public void updateTime(String courseId){
+        log.info("Update course:{} time", courseId);
+        myCourseMapper.updateTime(courseId);
     }
 }

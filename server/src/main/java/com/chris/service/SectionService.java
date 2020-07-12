@@ -27,6 +27,9 @@ public class SectionService {
     @Resource
     private SectionMapper sectionMapper;
 
+    @Resource
+    private CourseService courseService;
+
     public void list(SectionPageDto pageDto){
         PageHelper.startPage(pageDto.getPage(), pageDto.getSize());
         SectionExample example = new SectionExample();
@@ -46,7 +49,7 @@ public class SectionService {
         pageDto.setList(dtoList);
     }
 
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional
     public void save(SectionDto sectionDto){
         Section section = new Section();
         BeanUtils.copyProperties(sectionDto, section);
@@ -54,6 +57,9 @@ public class SectionService {
             insert(section);
         }else{
             update(section);
+        }
+        if(!StringUtils.isEmpty(section.getCourseId())) {
+            courseService.updateTime(section.getCourseId());
         }
     }
 
@@ -73,4 +79,6 @@ public class SectionService {
     public void delete(String id){
         sectionMapper.deleteByPrimaryKey(id);
     }
+
+
 }

@@ -77,9 +77,9 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Course</label>
-<!--                                <div class="col-sm-10">-->
-<!--                                    <p class="form-control-static">{{course.name}}</p>-->
-<!--                                </div>-->
+                                <div class="col-sm-10">
+                                    <p class="form-control-static">{{course.name}}</p>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Chapter</label>
@@ -169,7 +169,9 @@
         },
         mounted() {
             let vm = this;
+            let course = SessionStorage.get(SESSION_KEY_COURSE) || {};
             let chapter = SessionStorage.get(SESSION_KEY_CHAPTER) || {};
+            vm.course = course;
             vm.chapter = chapter;
             vm.list(1);
 
