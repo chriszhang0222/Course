@@ -74,3 +74,11 @@ insert into `category` (id, parent, name, sort) values ('00000201', '00000200', 
 insert into `category` (id, parent, name, sort) values ('00000202', '00000200', 'Python Django', 202);
 insert into `category` (id, parent, name, sort) values ('00000203', '00000200', 'Machine Learning', 203);
 insert into `category` (id, parent, name, sort) values ('00000204', '00000200', 'Kafka and Hadoop', 204);
+
+drop table if exists `course_category`;
+create table `course_category`(
+    `id` char(8) not null default '',
+    `course_id` char(8),
+    `category_id` char(8),
+    primary key (`id`)
+)engine=innodb default charset=utf8mb4;

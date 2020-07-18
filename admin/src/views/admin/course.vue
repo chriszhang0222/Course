@@ -48,7 +48,7 @@
                         <p>{{course.summary}}</p>
                         <p>
                             <span class="badge badge-info">{{course.id}}</span>
-                            <span class="badge badge-info">排序：{{course.sort}}</span>
+                            <span class="badge badge-info">Order：{{course.sort}}</span>
                             <span class="badge badge-info">{{course.time | formatSecond}}</span>
                         </p>
                         <p>
@@ -78,13 +78,13 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">表单</h4>
+                        <h4 class="modal-title">Form</h4>
                     </div>
                     <div class="modal-body">
                         <form class="form-horizontal">
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">
-                                    分类
+                                    Categories
                                 </label>
                                 <div class="col-sm-10">
                                     <ul id="tree" class="ztree"></ul>
@@ -106,39 +106,39 @@
 <!--                                </div>-->
 <!--                            </div>-->
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">名称</label>
+                                <label class="col-sm-2 control-label">Course Name</label>
                                 <div class="col-sm-10">
                                     <input v-model="course.name" class="form-control">
                                 </div>
                             </div>
+<!--                            <div class="form-group">-->
+<!--                                <label class="col-sm-2 control-label">讲师</label>-->
+<!--                                <div class="col-sm-10">-->
+<!--                                    <select v-model="course.teacherId" class="form-control">-->
+<!--                                        <option v-for="o in teachers" v-bind:value="o.id">{{o.name}}</option>-->
+<!--                                    </select>-->
+<!--                                </div>-->
+<!--                            </div>-->
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">讲师</label>
-                                <div class="col-sm-10">
-                                    <select v-model="course.teacherId" class="form-control">
-                                        <option v-for="o in teachers" v-bind:value="o.id">{{o.name}}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">概述</label>
+                                <label class="col-sm-2 control-label">Description</label>
                                 <div class="col-sm-10">
                                     <textarea v-model="course.summary" class="form-control"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">时长</label>
+                                <label class="col-sm-2 control-label">Duration</label>
                                 <div class="col-sm-10">
                                     <input v-model="course.time" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">价格（元）</label>
+                                <label class="col-sm-2 control-label">Price</label>
                                 <div class="col-sm-10">
                                     <input v-model="course.price" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">级别</label>
+                                <label class="col-sm-2 control-label">Level</label>
                                 <div class="col-sm-10">
                                     <select v-model="course.level" class="form-control">
                                         <option v-for="o in COURSE_LEVEL" v-bind:value="o.key">{{o.value}}</option>
@@ -146,7 +146,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">收费</label>
+                                <label class="col-sm-2 control-label">Charge</label>
                                 <div class="col-sm-10">
                                     <select v-model="course.charge" class="form-control">
                                         <option v-for="o in COURSE_CHARGE" v-bind:value="o.key">{{o.value}}</option>
@@ -154,7 +154,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">状态</label>
+                                <label class="col-sm-2 control-label">Status</label>
                                 <div class="col-sm-10">
                                     <select v-model="course.status" class="form-control">
                                         <option v-for="o in COURSE_STATUS" v-bind:value="o.key">{{o.value}}</option>
@@ -162,13 +162,13 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">报名数</label>
+                                <label class="col-sm-2 control-label">Number enrolled</label>
                                 <div class="col-sm-10">
                                     <input v-model="course.enroll" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">顺序</label>
+                                <label class="col-sm-2 control-label">Order</label>
                                 <div class="col-sm-10">
                                     <input v-model="course.sort" class="form-control" disabled>
                                 </div>
@@ -176,8 +176,8 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                        <button v-on:click="save()" type="button" class="btn btn-primary">保存</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button v-on:click="save()" type="button" class="btn btn-primary">Save</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -241,7 +241,7 @@
                 COURSE_CHARGE: COURSE_CHARGE,
                 COURSE_STATUS: COURSE_STATUS,
                 FILE_USE: FILE_USE,
-                categorys: [],
+                categories: [],
                 tree: {},
                 saveContentLabel: "",
                 sort: {
@@ -256,6 +256,7 @@
         mounted() {
             let vm = this;
             vm.$refs.pagination.size = 5;
+            vm.allCategory();
             vm.list(1);
         },
         methods:{
@@ -264,11 +265,88 @@
               SessionStorage.set(SESSION_KEY_COURSE, course);
               vm.$router.push('/business/chapter');
             },
+            allCategory(){
+              let vm = this;
+              Loading.show();
+              vm.$ajax.post(vm.url + '/business/admin/category/all')
+                .then((res) => {
+                    Loading.hide();
+                    let resp = res.data;
+                    vm.categories = resp.content;
+                    vm.initTree();
+                })
+            },
+            initTree(){
+                let vm = this;
+                let setting = {
+                    check:{
+                        enable: true
+                    },
+                    data:{
+                        simpleData: {
+                            idKey: "id",
+                            pIdKey: "parent",
+                            rootPId: "00000000",
+                            enable: true
+                        }
+                    }
+                };
+                let zNodes = vm.categories;
+                vm.tree = $.fn.zTree.init($("#tree"), setting, zNodes);
+            },
+            listCategory(courseId){
+              let vm = this;
+              Loading.show();
+              vm.$ajax.post(vm.url + '/business/admin/course/list-category/'+courseId)
+                .then((res) => {
+                    let resp = res.data;
+                    let categories = resp.content;
+                    vm.tree.checkAllNodes(false);
+                    for(let i=0;i<categories.length;i++){
+                        let node = vm.tree.getNodeByParam("id", categories[i].id);
+                        vm.tree.checkNode(node, true);
+                    }
+                })
+            },
             add(){
-
+                let vm = this;
+                vm.course = {
+                    sort: vm.$refs.pagination.total + 1
+                };
+                $('#form-modal').modal('show');
+            },
+            save(page){
+                let vm = this;
+                let course = vm.course
+                if(!Validator.require(course.name, 'name') ||
+                !Validator.length(course.name, 1, 50)){
+                    return;
+                }
+                let categories = vm.tree.getCheckedNodes();
+                if(Tool.isEmpty(categories)){
+                    Toast.warning('Please check categories');
+                }
+                vm.course.categories = categories;
+                Loading.show();
+                vm.$ajax.post(vm.url + '/business/admin/course/save', course)
+                .then((res) => {
+                    Loading.hide();
+                    let resp = res.data;
+                    if(resp.success){
+                        $('#form-modal').modal('hide');
+                        vm.list(1);
+                        Toast.success('Saved Successfully');
+                    }else{
+                        Toast.warning(resp.message);
+                    }
+                })
             },
             edit(course){
-
+                let vm = this;
+                vm.course = {
+                    sort: vm.$refs.pagination.total+1
+                }
+                $('#form-modal').modal('show');
             },
             list(page){
               let vm = this;

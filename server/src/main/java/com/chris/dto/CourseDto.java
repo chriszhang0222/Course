@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -30,5 +31,9 @@ public class CourseDto {
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date updatedAt;
+
+    List<CategoryDto> categories;
+    List<ChapterDto> chapters;
+    List<SectionDto> sections;
 
 }

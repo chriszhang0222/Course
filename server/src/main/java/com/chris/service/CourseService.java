@@ -1,6 +1,8 @@
 package com.chris.service;
 
 import com.chris.domain.Course;
+import com.chris.domain.CourseCategory;
+import com.chris.domain.CourseCategoryExample;
 import com.chris.domain.CourseExample;
 import com.chris.dto.CourseDto;
 import com.chris.dto.subpagedto.CoursePageDto;
@@ -31,6 +33,8 @@ public class CourseService {
     @Resource
     private MyCourseMapper myCourseMapper;
 
+    @Resource CourseCategoryService courseCategoryService;
+
     public void list(CoursePageDto coursePageDto){
         PageHelper.startPage(coursePageDto.getPage(), coursePageDto.getSize());
         CourseExample courseExample = new CourseExample();
@@ -54,6 +58,7 @@ public class CourseService {
         }else{
             update(course);
         }
+        courseCategoryService.saveBatch(course.getId(), courseDto.getCategories());
     }
 
     public void insert(Course course){
@@ -69,7 +74,9 @@ public class CourseService {
     }
 
     public void delete(String id){
+        CourseCategoryExample example = new CourseCategoryExample();
         courseMapper.deleteByPrimaryKey(id);
+        courseCategoryService.deleteByCourseId(id);
     }
 
     public void updateTime(String courseId){

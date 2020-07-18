@@ -1,5 +1,8 @@
 package com.chris.domain;
 
+import lombok.Data;
+
+@Data
 public class CourseCategory {
     private String id;
 
