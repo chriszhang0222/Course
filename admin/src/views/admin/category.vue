@@ -196,7 +196,7 @@
                     }, 100)
                 })
             },
-            delete(id){
+            del(id){
                 let vm = this;
                 Confirm.show('Are you sure you want to delete?', function(){
                    Loading.show();
@@ -212,7 +212,7 @@
             save(){
                 let vm = this;
                 if(!Validator.require(vm.category.parent, 'parent id') || !Validator.require(vm.category.name, 'name') ||
-                !Validator.require(vm.category.sort)){
+                !Validator.require(vm.category.sort, 'order')){
                     return;
                 }
                 Loading.show();
@@ -242,6 +242,6 @@
 
 <style scoped>
     .active td {
-        background-color: #d6e9c6 !important;
+        background-color: #bdecec !important;
     }
 </style>

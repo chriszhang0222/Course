@@ -876,10 +876,11 @@
                 <div class="breadcrumbs ace-save-state" id="breadcrumbs">
                     <ul class="breadcrumb">
                         <li>
-                            <i class="ace-icon fa fa-home home-icon"></i>
-                            <a href="#">Home</a>
+                            <router-link to="/welcome">
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <span class="menu-text">Home</span>
+                            </router-link>
                         </li>
-                        <li class="active">Dashboard</li>
                     </ul><!-- /.breadcrumb -->
 
                     <div class="nav-search" id="nav-search">
