@@ -4,6 +4,7 @@ import com.chris.dto.SectionDto;
 import com.chris.dto.subpagedto.SectionPageDto;
 import com.chris.service.SectionService;
 import com.chris.util.CommonResponse;
+import com.chris.util.ValidatorUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,7 @@ public class SectionController {
 
     @PostMapping("/save")
     public CommonResponse save(@RequestBody SectionDto sectionDto) {
+        ValidatorUtil.require(sectionDto.getCourseId(), "course id");
         CommonResponse<SectionDto> response = new CommonResponse<>();
         sectionService.save(sectionDto);
         response.setContent(sectionDto);

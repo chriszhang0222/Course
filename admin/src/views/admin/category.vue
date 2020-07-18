@@ -4,23 +4,23 @@
         <div class="row">
             <div class="col-md-6">
                 <p>
-                    <button v-on:click="add()" class="btn btn-white btn-default btn-round">
+                    <button v-on:click="add1()" class="btn btn-white btn-default btn-round">
                         <i class="ace-icon fa fa-edit"></i>
-                        新增一级
+                        Add category Level 1
                     </button>
                     <button v-on:click="all()" class="btn btn-white btn-default btn-round">
                         <i class="ace-icon fa fa-refresh"></i>
-                        刷新
+                        Refresh
                     </button>
                 </p>
 
                 <table id="level1-table" class="table  table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th>id</th>
-                            <th>名称</th>
-                            <th>顺序</th>
-                            <th>操作</th>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Order</th>
+                            <th>Operations</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -44,19 +44,19 @@
             </div>
             <div class="col-md-6">
                 <p>
-                    <button v-on:click="add_level2()" class="btn btn-white btn-default btn-round">
+                    <button v-on:click="add2()" class="btn btn-white btn-default btn-round">
                         <i class="ace-icon fa fa-edit"></i>
-                        新增二级
+                        Add Category Level 2
                     </button>
                 </p>
 
                 <table id="level2-table" class="table table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th>id</th>
-                            <th>名称</th>
-                            <th>顺序</th>
-                            <th>操作</th>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Order</th>
+                            <th>Operation</th>
                         </tr>
                     </thead>
 
@@ -85,24 +85,24 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">表单</h4>
+                        <h4 class="modal-title">Form</h4>
                     </div>
                     <div class="modal-body">
                         <form class="form-horizontal">
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">父分类</label>
+                                <label class="col-sm-2 control-label">Parent Category</label>
                                 <div class="col-sm-10">
-                                    <p class="form-control-static">{{active.name || "无"}}</p>
+                                    <p class="form-control-static">{{active.name || "None"}}</p>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">名称</label>
+                                <label class="col-sm-2 control-label">Name</label>
                                 <div class="col-sm-10">
                                     <input v-model="category.name" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">顺序</label>
+                                <label class="col-sm-2 control-label">Order</label>
                                 <div class="col-sm-10">
                                     <input v-model="category.sort" class="form-control">
                                 </div>
@@ -110,8 +110,8 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                        <button v-on:click="save()" type="button" class="btn btn-primary">保存</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button v-on:click="save()" type="button" class="btn btn-primary">Save</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -120,11 +120,11 @@
 </template>
 
 <script>
-    import Pagination from '../../components/pagination.vue'
+    import pagination from '../../components/pagination.vue'
     import pageHeader from "../../components/pageHeader";
     export default {
         name: "business-category",
-        components: {Pagination, pageHeader},
+        components: {pagination, pageHeader},
         data: function(){
             return {
                 category: {},
@@ -136,17 +136,44 @@
             }
         },
         mounted() {
-
+            let vm = this;
+            vm.all();
         },
         methods: {
+            add1(){
+              let vm = this;
+              vm.active = {};
+              vm.level2 = [];
+              vm.category = {
+                  parent: "00000000"
+              };
+              $('#form-modal').modal('show');
+            },
+            add2(){
+              let vm = this;
+              if(Tool.isEmpty(vm.active)){
+                  Toast.warning('Please select category level 1');
+                  return;
+              }
+              vm.category = {
+                  parent: vm.active.id
+              };
+              $('.modal').modal('show');
+            },
+            onClickLevel1(category){
+                let vm = this;
+                vm.active = category;
+                let childern = category.children;
+                this.level2 = childern;
+            },
             all(){
                 let vm = this;
                 Loading.show();
                 vm.$ajax.post(vm.url + '/business/admin/category/all')
                 .then((res) => {
                     Loading.hide();
-                    let resp = res.data.content;
-                    vm.categories = resp.list
+                    let resp = res.data
+                    vm.categories = resp.content
                     vm.level1 = []
                     for(let i=0;i<vm.categories.length;i++){
                         let c = vm.categories[i];
@@ -168,6 +195,45 @@
                         $("tr.active").trigger("click");
                     }, 100)
                 })
+            },
+            delete(id){
+                let vm = this;
+                Confirm.show('Are you sure you want to delete?', function(){
+                   Loading.show();
+                   vm.$ajax.delete(vm.url + '/business/admin/category/delete/' + id)
+                    .then((res) => {
+                        if(res.data.success){
+                            vm.all();
+                            Toast.success('Delete Successfully');
+                        }
+                    })
+                });
+            },
+            save(){
+                let vm = this;
+                if(!Validator.require(vm.category.parent, 'parent id') || !Validator.require(vm.category.name, 'name') ||
+                !Validator.require(vm.category.sort)){
+                    return;
+                }
+                Loading.show();
+                vm.$ajax.post(vm.url + '/business/admin/category/save', vm.category)
+                .then((res) => {
+                    Loading.hide();
+                    let resp = res.data;
+                    if(resp.success){
+                        $('#form-modal').modal('hide');
+                        vm.all();
+                        Toast.success('Save successfully!');
+                        vm.category = {};
+                    }else{
+                        Toast.warning(resp.message);
+                    }
+                })
+            },
+            edit: function(category){
+                let vm = this;
+                vm.category = $.extend({}, category);
+                $('#form-modal').modal('show');
             }
         }
 

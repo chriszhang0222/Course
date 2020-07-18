@@ -360,45 +360,6 @@
 
                     <b class="arrow"></b>
                 </li>
-                <li class="">
-                    <a href="#" class="dropdown-toggle">
-                        <i class="menu-icon fa fa-bar-chart"></i>
-                        <span class="menu-text">System</span>
-
-                        <b class="arrow fa fa-angle-down"></b>
-                    </a>
-
-                    <b class="arrow"></b>
-
-                    <ul class="submenu">
-                        <li class="" id="system-user-sidebar">
-                            <router-link to="/system/user">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                User Management
-                            </router-link>
-
-                            <b class="arrow"></b>
-                        </li>
-
-                        <li class="" id="system-resource-sidebar">
-                            <router-link to="/system/resource">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                Resources Management
-                            </router-link>
-
-                            <b class="arrow"></b>
-                        </li>
-
-                        <li class="" id="system-role-sidebar">
-                            <router-link to="/business/chapter">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                Character Management
-                            </router-link>
-
-                            <b class="arrow"></b>
-                        </li>
-                    </ul>
-                </li>
 
                 <li class="">
                     <a href="#" class="dropdown-toggle">
@@ -411,6 +372,12 @@
                     <b class="arrow"></b>
 
                     <ul class="submenu">
+                        <li class="" id="business-category-sidebar">
+                            <router-link to="/business/category">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Category Management
+                            </router-link>
+                        </li>
                         <li class="" id="business-chapter-sidebar">
                             <router-link to="/business/chapter">
                                 <i class="menu-icon fa fa-caret-right"></i>
