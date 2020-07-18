@@ -77,7 +77,9 @@ public class SectionService {
     }
 
     public void delete(String id){
+        Section section = sectionMapper.selectByPrimaryKey(id);
         sectionMapper.deleteByPrimaryKey(id);
+        courseService.updateTime(section.getCourseId());
     }
 
 

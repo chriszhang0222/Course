@@ -204,6 +204,7 @@
                     return;
                 }
                 section.chapterId = vm.chapter.id;
+                section.courseId = vm.course.id;
                 Loading.show();
                 let url = vm.url;
                 console.log(section);
