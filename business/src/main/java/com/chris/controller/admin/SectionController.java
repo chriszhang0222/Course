@@ -24,7 +24,7 @@ public class SectionController {
     }
 
     @PostMapping("/save")
-    public CommonResponse save(@RequestBody SectionDto sectionDto){
+    public CommonResponse save(@RequestBody SectionDto sectionDto) {
         CommonResponse<SectionDto> response = new CommonResponse<>();
         sectionService.save(sectionDto);
         response.setContent(sectionDto);
