@@ -299,17 +299,19 @@
               Loading.show();
               vm.$ajax.post(vm.url + '/business/admin/course/list-category/'+courseId)
                 .then((res) => {
+                    Loading.hide();
                     let resp = res.data;
                     let categories = resp.content;
                     vm.tree.checkAllNodes(false);
                     for(let i=0;i<categories.length;i++){
-                        let node = vm.tree.getNodeByParam("id", categories[i].id);
+                        let node = vm.tree.getNodeByParam("id", categories[i].categoryId);
                         vm.tree.checkNode(node, true);
                     }
                 })
             },
             add(){
                 let vm = this;
+                vm.tree.checkAllNodes(false);
                 vm.course = {
                     sort: vm.$refs.pagination.total + 1
                 };
@@ -319,12 +321,14 @@
                 let vm = this;
                 let course = vm.course
                 if(!Validator.require(course.name, 'name') ||
-                !Validator.length(course.name, 1, 50)){
+                !Validator.length(course.name, 'name', 1, 50) ||
+                !Validator.require(course.price, 'price')){
                     return;
                 }
                 let categories = vm.tree.getCheckedNodes();
                 if(Tool.isEmpty(categories)){
                     Toast.warning('Please check categories');
+                    return;
                 }
                 vm.course.categories = categories;
                 Loading.show();
@@ -343,9 +347,8 @@
             },
             edit(course){
                 let vm = this;
-                vm.course = {
-                    sort: vm.$refs.pagination.total+1
-                }
+                vm.course = $.extend({}, course);
+                vm.listCategory(course.id);
                 $('#form-modal').modal('show');
             },
             list(page){
