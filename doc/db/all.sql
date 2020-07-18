@@ -82,3 +82,10 @@ create table `course_category`(
     `category_id` char(8),
     primary key (`id`)
 )engine=innodb default charset=utf8mb4;
+
+drop table if exists `course_content`;
+create table `course_content`(
+    `id` char(8) not null default '',
+    `content` mediumtext not null,
+    primary key (id)
+)engine=innodb default charset=utf8mb4;
