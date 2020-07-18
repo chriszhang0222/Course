@@ -8,27 +8,25 @@ import java.util.List;
 
 public class CopyUtil {
 
-    public static <T> List<T> copyList(List source, Class<T> clazz) {
+    public static <T> List<T> copyList(List source, Class<T> clazz){
         List<T> target = new ArrayList<>();
-        if (!CollectionUtils.isEmpty(source)){
-            if (!CollectionUtils.isEmpty(source)){
-                for (Object c: source) {
-                    T obj = copy(c, clazz);
-                    target.add(obj);
-                }
+        if(!CollectionUtils.isEmpty(source)){
+            for(Object c: source){
+                T obj = copy(c, clazz);
+                target.add(obj);
             }
         }
         return target;
     }
 
-    public static <T> T copy(Object source, Class<T> clazz) {
-        if (source == null) {
+    public static <T> T copy(Object source, Class<T> clazz){
+        if(source == null){
             return null;
         }
         T obj = null;
-        try {
+        try{
             obj = clazz.newInstance();
-        } catch (Exception e) {
+        }catch (Exception e){
             e.printStackTrace();
         }
         BeanUtils.copyProperties(source, obj);

@@ -53,3 +53,24 @@ create table `course`(
 
 update course c set `time` = (select sum(`time`) from section where course_id = '000000')
 where c.id = '000000';
+
+drop table if exists `category`;
+create table `category`(
+    id char(8) not null default '',
+    parent char(8) not null default '',
+    name varchar(50) not null,
+    sort int,
+    primary key (id)
+)ENGINE=InnoDB default CHARSET=utf8mb4;
+
+insert into `category` (id, parent, name, sort) values ('00000100', '00000000', 'Front-end Technique', 100);
+insert into `category` (id, parent, name, sort) values ('00000101', '00000100', 'React.js', 101);
+insert into `category` (id, parent, name, sort) values ('00000102', '00000100', 'Node.js', 102);
+insert into `category` (id, parent, name, sort) values ('00000103', '00000100', 'Angular.js', 103);
+insert into `category` (id, parent, name, sort) values ('00000104', '00000100', 'Vue.js', 104);
+
+insert into `category` (id, parent, name, sort) values ('00000200', '00000000', 'Backend-end Technique', 200);
+insert into `category` (id, parent, name, sort) values ('00000201', '00000200', 'Spring Boot and Cloud', 201);
+insert into `category` (id, parent, name, sort) values ('00000202', '00000200', 'Python Django', 202);
+insert into `category` (id, parent, name, sort) values ('00000203', '00000200', 'Machine Learning', 203);
+insert into `category` (id, parent, name, sort) values ('00000204', '00000200', 'Kafka and Hadoop', 204);
