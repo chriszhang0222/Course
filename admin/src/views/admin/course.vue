@@ -260,6 +260,11 @@
             vm.list(1);
         },
         methods:{
+            toContent(course){
+              let vm = this;
+              SessionStorage.set(SESSION_KEY_COURSE, course);
+              vm.$router.push('/business/content')
+            },
             toChapter(course){
               let vm = this;
               SessionStorage.set(SESSION_KEY_COURSE, course);

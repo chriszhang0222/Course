@@ -1,6 +1,7 @@
 package com.chris.controller.admin;
 
 import com.chris.dto.CourseCategoryDto;
+import com.chris.dto.CourseContentDto;
 import com.chris.dto.CourseDto;
 import com.chris.dto.subpagedto.CoursePageDto;
 import com.chris.service.CourseCategoryService;
@@ -46,6 +47,17 @@ public class CourseController {
     @PostMapping("/list-category/{courseId}")
     public List<CourseCategoryDto> listCategory(@PathVariable(value = "courseId")String courseId){
         return courseCategoryService.listByCourse(courseId);
+    }
+
+    @GetMapping("/find-content/{id}")
+    public CourseContentDto findContent(@PathVariable String id){
+        return courseService.findContent(id);
+    }
+
+    @PostMapping("/save-content")
+    public CourseContentDto saveContent(@RequestBody CourseContentDto dto){
+        courseService.saveContent(dto);
+        return dto;
     }
 
 

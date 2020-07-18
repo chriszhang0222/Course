@@ -1,13 +1,13 @@
 package com.chris.service;
 
-import com.chris.domain.Course;
-import com.chris.domain.CourseCategory;
-import com.chris.domain.CourseCategoryExample;
-import com.chris.domain.CourseExample;
+import com.chris.domain.*;
+import com.chris.dto.CourseContentDto;
 import com.chris.dto.CourseDto;
 import com.chris.dto.subpagedto.CoursePageDto;
+import com.chris.mapper.CourseContentMapper;
 import com.chris.mapper.CourseMapper;
 import com.chris.mapper.my.MyCourseMapper;
+import com.chris.util.CopyUtil;
 import com.chris.util.UuidUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -33,7 +33,11 @@ public class CourseService {
     @Resource
     private MyCourseMapper myCourseMapper;
 
-    @Resource CourseCategoryService courseCategoryService;
+    @Resource
+    private CourseCategoryService courseCategoryService;
+
+    @Resource
+    private CourseContentMapper courseContentMapper;
 
     public void list(CoursePageDto coursePageDto){
         PageHelper.startPage(coursePageDto.getPage(), coursePageDto.getSize());
@@ -82,5 +86,21 @@ public class CourseService {
     public void updateTime(String courseId){
         log.info("Update course:{} time", courseId);
         myCourseMapper.updateTime(courseId);
+    }
+
+    public CourseContentDto findContent(String id){
+        CourseContent courseContent = courseContentMapper.selectByPrimaryKey(id);
+        if(courseContent == null)
+            return null;
+        return CopyUtil.copy(courseContent, CourseContentDto.class);
+    }
+
+    public int saveContent(CourseContentDto courseContentDto){
+        CourseContent content = CopyUtil.copy(courseContentDto, CourseContent.class);
+        int i = courseContentMapper.updateByPrimaryKeyWithBLOBs(content);
+        if(i == 0){
+            i = courseContentMapper.insert(content);
+        }
+        return i;
     }
 }
