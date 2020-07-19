@@ -36,4 +36,8 @@ public class CourseDto {
     List<ChapterDto> chapters;
     List<SectionDto> sections;
 
+    private String content;
+    private TeacherDto teacher;
+    private String teacherId;
+
 }

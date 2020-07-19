@@ -1,9 +1,9 @@
 package com.chris.service;
 
 import com.chris.domain.*;
-import com.chris.dto.CourseContentDto;
-import com.chris.dto.CourseDto;
+import com.chris.dto.*;
 import com.chris.dto.subpagedto.CoursePageDto;
+import com.chris.enums.CourseStatus;
 import com.chris.mapper.CourseContentMapper;
 import com.chris.mapper.CourseMapper;
 import com.chris.mapper.my.MyCourseMapper;
@@ -38,6 +38,15 @@ public class CourseService {
 
     @Resource
     private CourseContentMapper courseContentMapper;
+
+    @Resource
+    private TeacherService teacherService;
+
+    @Resource
+    private ChapterService chapterService;
+
+    @Resource
+    private SectionService sectionService;
 
     public void list(CoursePageDto coursePageDto){
         PageHelper.startPage(coursePageDto.getPage(), coursePageDto.getSize());
@@ -102,5 +111,26 @@ public class CourseService {
             i = courseContentMapper.insert(content);
         }
         return i;
+    }
+
+    public CourseDto findCourse(String id){
+        Course course = courseMapper.selectByPrimaryKey(id);
+        if(course == null || !CourseStatus.PUBLISH.getCode().equals(course.getStatus())){
+            return null;
+        }
+        CourseDto courseDto = CopyUtil.copy(course, CourseDto.class);
+        CourseContent content = courseContentMapper.selectByPrimaryKey(id);
+        if(content != null){
+            courseDto.setContent(content.getContent());
+        }
+        TeacherDto teacherDto = teacherService.findById(courseDto.getTeacherId());
+        courseDto.setTeacher(teacherDto);
+
+        List<ChapterDto> chapterDtos = chapterService.listByCourse(id);
+        courseDto.setChapters(chapterDtos);
+
+        List<SectionDto> sectionDtos = sectionService.listByCourse(id);
+        courseDto.setSections(sectionDtos);
+        return courseDto;
     }
 }

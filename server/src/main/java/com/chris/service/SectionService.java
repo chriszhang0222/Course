@@ -7,6 +7,7 @@ import com.chris.dto.PageDto;
 import com.chris.dto.SectionDto;
 import com.chris.dto.subpagedto.SectionPageDto;
 import com.chris.mapper.SectionMapper;
+import com.chris.util.CopyUtil;
 import com.chris.util.UuidUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -80,6 +81,13 @@ public class SectionService {
         Section section = sectionMapper.selectByPrimaryKey(id);
         sectionMapper.deleteByPrimaryKey(id);
         courseService.updateTime(section.getCourseId());
+    }
+
+    public List<SectionDto> listByCourse(String courseId){
+        SectionExample sectionExample = new SectionExample();
+        sectionExample.createCriteria().andCourseIdEqualTo(courseId);
+        List<Section> sections = sectionMapper.selectByExample(sectionExample);
+        return CopyUtil.copyList(sections, SectionDto.class);
     }
 
 

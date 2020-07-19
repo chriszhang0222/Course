@@ -89,3 +89,14 @@ create table `course_content`(
     `content` mediumtext not null,
     primary key (id)
 )engine=innodb default charset=utf8mb4;
+
+drop table if exists `teacher`;
+create table `teacher`(
+    `id` char(8) not null default '',
+    `name` varchar(50) not null,
+    `nickname` varchar(50),
+    `image` varchar(100),
+    `position` varchar(50),
+    `intro` varchar(500),
+    primary key (id)
+)engine=innodb default charset=utf8mb4;

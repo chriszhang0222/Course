@@ -6,6 +6,7 @@ import com.chris.dto.ChapterDto;
 import com.chris.dto.PageDto;
 import com.chris.dto.subpagedto.ChapterPageDto;
 import com.chris.mapper.ChapterMapper;
+import com.chris.util.CopyUtil;
 import com.chris.util.UuidUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -63,6 +64,13 @@ public class ChapterService {
 
     public void delete(String id){
         chapterMapper.deleteByPrimaryKey(id);
+    }
+
+    public List<ChapterDto> listByCourse(String courseId){
+        ChapterExample example = new ChapterExample();
+        example.createCriteria().andCourseIdEqualTo(courseId);
+        List<Chapter> chapters = chapterMapper.selectByExample(example);
+        return CopyUtil.copyList(chapters, ChapterDto.class);
     }
 
 
