@@ -393,6 +393,12 @@
                             </router-link>
                             <b class="arrow"></b>
                         </li>
+                        <li class="" id="business-teacher-sidebar">
+                            <router-link to="/business/teacher">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Teacher Management
+                            </router-link>
+                        </li>
                     </ul>
                 </li>
 

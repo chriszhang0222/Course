@@ -1,6 +1,6 @@
 <template>
     <div>
-        <PageHeader title="Teacher Page View">teacher</PageHeader>
+        <pageHeader title="Teacher Page View">teacher</pageHeader>
         <p>
             <button v-on:click="add()" class="btn btn-white btn-default btn-round">
                 <i class="ace-icon fa fa-edit"></i>
@@ -37,7 +37,7 @@
                 <div class="text-center">
                     <a href="javascript:;"
                        class="text-info bigger-110"
-                       v-bind:title="teacher.motto"
+                       v-bind:title="teacher.name"
                     >
                         <i class="ace-icon fa fa-user"></i>
                         {{teacher.name}}【{{teacher.nickname}}】
@@ -61,51 +61,45 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">表单</h4>
+                        <h4 class="modal-title">Form</h4>
                     </div>
                     <div class="modal-body">
                         <form class="form-horizontal">
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">姓名</label>
+                                <label class="col-sm-2 control-label">Name</label>
                                 <div class="col-sm-10">
                                     <input v-model="teacher.name" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">昵称</label>
+                                <label class="col-sm-2 control-label">Nickname</label>
                                 <div class="col-sm-10">
                                     <input v-model="teacher.nickname" class="form-control">
                                 </div>
                             </div>
+<!--                            <div class="form-group">-->
+<!--                                <label class="col-sm-2 control-label">头像</label>-->
+<!--                                <div class="col-sm-10">-->
+<!--                                    <big-file v-bind:input-id="'image-upload'"-->
+<!--                                              v-bind:text="'上传头像'"-->
+<!--                                              v-bind:suffixs="['jpg', 'jpeg', 'png']"-->
+<!--                                              v-bind:use="FILE_USE.TEACHER.key"-->
+<!--                                              v-bind:after-upload="afterUpload"></big-file>-->
+<!--                                    <div v-show="teacher.image" class="row">-->
+<!--                                        <div class="col-md-4">-->
+<!--                                            <img v-bind:src="teacher.image" class="img-responsive">-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">头像</label>
-                                <div class="col-sm-10">
-                                    <big-file v-bind:input-id="'image-upload'"
-                                              v-bind:text="'上传头像'"
-                                              v-bind:suffixs="['jpg', 'jpeg', 'png']"
-                                              v-bind:use="FILE_USE.TEACHER.key"
-                                              v-bind:after-upload="afterUpload"></big-file>
-                                    <div v-show="teacher.image" class="row">
-                                        <div class="col-md-4">
-                                            <img v-bind:src="teacher.image" class="img-responsive">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">职位</label>
+                                <label class="col-sm-2 control-label">Position</label>
                                 <div class="col-sm-10">
                                     <input v-model="teacher.position" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">座右铭</label>
-                                <div class="col-sm-10">
-                                    <input v-model="teacher.motto" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">简介</label>
+                                <label class="col-sm-2 control-label">Intro</label>
                                 <div class="col-sm-10">
                                     <textarea v-model="teacher.intro" class="form-control" rows="5"></textarea>
                                 </div>
@@ -113,8 +107,8 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                        <button v-on:click="save()" type="button" class="btn btn-primary">保存</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button v-on:click="save()" type="button" class="btn btn-primary">Save</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -124,34 +118,82 @@
 </template>
 
 <script>
-    import Pagination from '../../components/pagination'
-    import PageHeader from "../../components/pageHeader";
+    import pagination from '../../components/pagination'
+    import pageHeader from "../../components/pageHeader";
     export default {
         name: "business-teacher",
-        components: {PageHeader, Pagination},
+        components: {pageHeader, pagination},
         data: function(){
           return {
               teacher: {},
               teachers: [],
-              FILE_USE: FILE_USE
+              FILE_USE: FILE_USE,
+              url: process.env.VUE_APP_SERVER
           }
         },
         mounted() {
             let vm = this;
+            vm.$refs.pagination.size = 5;
+            vm.list(1);
         },
         methods: {
             list(page){
-
+                let vm = this;
+                Loading.show();
+                vm.$ajax.post(vm.url+ '/business/admin/teacher/list', {
+                    page: page,
+                    size: vm.$refs.size
+                }).then((res) => {
+                    Loading.hide();
+                    let resp = res.data;
+                    vm.teachers = resp.content.list;
+                    vm.$refs.pagination.render(page, resp.content.total);
+                })
             },
             add(){
-
+                this.teacher = {}
+                $('#form-modal').modal('show');
             },
             edit(teacher){
-
+                let vm = this;
+                vm.teacher = $.extend({}, teacher);
+                $('#form-modal').modal('show');
             },
             save(){
-
+                let vm = this;
+                if(!Validator.require(vm.teacher.name, 'name')){
+                    return;
+                }
+                Loading.show();
+                vm.$ajax.post(vm.url + '/business/admin/teacher/save', vm.teacher)
+                .then((res) => {
+                    Loading.hide();
+                    if(res.data.success){
+                        $('#form-modal').modal('hide');
+                        vm.list(1);
+                        Toast.success('Saved Successfully');
+                    }else{
+                        Toast.warning(res.data.message);
+                    }
+                })
             },
+            del(id){
+                let vm = this;
+                Confirm.show('Are you sure?', ()=>{
+                    Loading.show();
+                    vm.$ajax.delete(vm.url + '/business/admin/teacher/delete/'+id)
+                    .then((res) => {
+                        Loading.hide();
+                        let resp = res.data;
+                        if(resp.success){
+                            vm.list(1);
+                            Toast.success('Delete successfully!');
+                        }else{
+                            Toast.warning(resp.message);
+                        }
+                    })
+                })
+            }
         }
     }
 </script>
