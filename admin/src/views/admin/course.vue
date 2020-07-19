@@ -111,14 +111,14 @@
                                     <input v-model="course.name" class="form-control">
                                 </div>
                             </div>
-<!--                            <div class="form-group">-->
-<!--                                <label class="col-sm-2 control-label">讲师</label>-->
-<!--                                <div class="col-sm-10">-->
-<!--                                    <select v-model="course.teacherId" class="form-control">-->
-<!--                                        <option v-for="o in teachers" v-bind:value="o.id">{{o.name}}</option>-->
-<!--                                    </select>-->
-<!--                                </div>-->
-<!--                            </div>-->
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Teacher</label>
+                                <div class="col-sm-10">
+                                    <select v-model="course.teacherId" class="form-control">
+                                        <option v-for="o in teachers" v-bind:value="o.id">{{o.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Description</label>
                                 <div class="col-sm-10">
@@ -257,6 +257,7 @@
             let vm = this;
             vm.$refs.pagination.size = 5;
             vm.allCategory();
+            vm.allTeachers()
             vm.list(1);
         },
         methods:{
@@ -351,7 +352,7 @@
                 };
                 $('#form-modal').modal('show');
             },
-            save(page){
+            save(){
                 let vm = this;
                 let course = vm.course
                 if(!Validator.require(course.name, 'name') ||
@@ -396,6 +397,18 @@
                   vm.courses = res.data.content.list;
                   vm.$refs.pagination.render(page, res.data.content.total);
               })
+            },
+            allTeachers(){
+                let vm = this;
+                vm.$ajax.post(vm.url + '/business/admin/teacher/all/')
+                .then((res) => {
+                    let resp = res.data;
+                    if(resp.success){
+                        vm.teachers = resp.content;
+                    }else{
+                        console.log(resp.message);
+                    }
+                })
             },
             del(id){
                 let vm = this;

@@ -25,6 +25,7 @@ public class CourseDto {
     private String status;
     private Integer enroll;
     private Integer sort;
+    private String teacherId;
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date createdAt;
@@ -38,6 +39,5 @@ public class CourseDto {
 
     private String content;
     private TeacherDto teacher;
-    private String teacherId;
 
 }
