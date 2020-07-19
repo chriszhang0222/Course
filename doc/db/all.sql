@@ -100,3 +100,17 @@ create table `teacher`(
     `intro` varchar(500),
     primary key (id)
 )engine=innodb default charset=utf8mb4;
+
+drop table if exists `file`;
+create table `file`(
+    `id` char(8) not null default '',
+    `path` varchar(200) not null ,
+    `name` varchar(100),
+    `suffix` varchar(10),
+    `size` int,
+    `use` char(1),
+    `create_at` datetime(3),
+    `update_at` datetime(3),
+    primary key (id),
+    unique key `path_unique` (path)
+)engine=innodb default charset=utf8mb4;
