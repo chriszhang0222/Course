@@ -58,7 +58,7 @@
                 vm.$ajax.post(vm.url, formData).then((res) => {
                     Loading.hide();
                     let resp = res.data;
-                    console.log('upload successfully!!!');
+                    console.log('upload successfully!!!', resp);
                     if(vm.afterUpload !== null){
                         vm.afterUpload(resp);
                     }
