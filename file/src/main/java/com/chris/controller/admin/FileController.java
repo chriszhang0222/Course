@@ -1,15 +1,15 @@
 package com.chris.controller.admin;
 
+import com.chris.dto.PageDto;
+import com.chris.service.FileService;
 import com.chris.util.CommonResponse;
 import com.chris.util.UuidUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import java.io.File;
 
 @RestController
@@ -24,6 +24,9 @@ public class FileController {
     @Value("${file.domain}")
     private String fileDomain;
 
+    @Resource
+    private FileService fileService;
+
     @RequestMapping("/upload")
     public CommonResponse upload(@RequestParam MultipartFile file) throws Exception{
         log.info("Start uploading file:{}", file);
@@ -36,5 +39,11 @@ public class FileController {
         file.transferTo(dest);
         log.info(dest.getAbsolutePath());
         return new CommonResponse("200", "OK", fileDomain + "teacher/" + key + "-" + fileName);
+    }
+
+    @PostMapping("/list")
+    public PageDto list(@RequestBody PageDto pageDto){
+        fileService.list(pageDto);
+        return pageDto;
     }
 }
