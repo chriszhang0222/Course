@@ -77,6 +77,17 @@
                                     <input v-model="teacher.nickname" class="form-control">
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Photo</label>
+                                <div class="col-sm-10">
+                                    <input type="file" v-on:change="uploadImage()" id="file-upload-input">
+                                    <div v-show="teacher.image" class="row">
+                                        <div class="col-md-4">
+                                            <img v-bind:src="teacher.image" class="img-responsive"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 <!--                            <div class="form-group">-->
 <!--                                <label class="col-sm-2 control-label">头像</label>-->
 <!--                                <div class="col-sm-10">-->
@@ -192,6 +203,20 @@
                             Toast.warning(resp.message);
                         }
                     })
+                })
+            },
+            uploadImage(){
+                let vm = this;
+                let formData = new window.FormData();
+                formData.append('file', document.querySelector('#file-upload-input').files[0]);
+                Loading.show();
+                vm.$ajax.post('http://127.0.0.1:9003' + '/file/admin/upload', formData)
+                .then((res) => {
+                    Loading.hide();
+                    let resp = res.data;
+                    let image = resp.content;
+                    console.log(image);
+                    vm.teacher.image = image;
                 })
             }
         }
