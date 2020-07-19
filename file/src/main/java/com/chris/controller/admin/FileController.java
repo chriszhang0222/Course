@@ -31,7 +31,7 @@ public class FileController {
 
         String fileName = file.getOriginalFilename();
         String key = UuidUtil.getShortUuid();
-        String fullpath = filePath + key + "-" + fileName;
+        String fullpath = filePath + "teacher/" + key + "-" + fileName;
         File dest = new File(fullpath);
         file.transferTo(dest);
         log.info(dest.getAbsolutePath());

@@ -80,7 +80,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Photo</label>
                                 <div class="col-sm-10">
-                                    <input type="file" v-on:change="uploadImage()" id="file-upload-input">
+                                    <input type="file" v-on:change="uploadImage()" ref="file" id="file-upload-input">
                                     <div v-show="teacher.image" class="row">
                                         <div class="col-md-4">
                                             <img v-bind:src="teacher.image" class="img-responsive"/>
@@ -205,10 +205,27 @@
                     })
                 })
             },
+            validfile(file){
+                let suffixs = ['jpg', 'png', 'jpeg', 'bmp'];
+                let fileName = file.name;
+                let suffix = fileName.substring(fileName.lastIndexOf(".")+1, fileName.length).toLowerCase();
+                for(let i=0;i<suffixs.length;i++){
+                    if(suffix === suffixs[i].toLowerCase()){
+                        return true;
+                    }
+                }
+                return false;
+            },
             uploadImage(){
                 let vm = this;
                 let formData = new window.FormData();
-                formData.append('file', document.querySelector('#file-upload-input').files[0]);
+                let file = vm.$refs.file.files[0];
+                if(!vm.validfile(file)){
+                    Toast.warning('File format is not correct!!');
+                    return;
+                }
+                formData.append('file', file);
+
                 Loading.show();
                 vm.$ajax.post('http://127.0.0.1:9003' + '/file/admin/upload', formData)
                 .then((res) => {
