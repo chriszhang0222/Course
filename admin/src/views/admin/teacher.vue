@@ -80,7 +80,13 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Photo</label>
                                 <div class="col-sm-10">
-                                    <input type="file" v-on:change="uploadImage()" ref="file" id="file-upload-input">
+                                    <file v-bind:suffixs="suffixs"
+                                          v-bind:url="'http://127.0.0.1:9003/file/admin/upload'"
+                                          v-bind:after-upload="afterUpload"
+                                          v-bind:text="'Photo Upload'"
+                                          v-bind:input-id="'image-upload'"
+                                    ></file>
+<!--                                    <input type="file" v-on:change="uploadImage()" ref="file" id="file-upload-input">-->
                                     <div v-show="teacher.image" class="row">
                                         <div class="col-md-4">
                                             <img v-bind:src="teacher.image" class="img-responsive"/>
@@ -131,15 +137,17 @@
 <script>
     import pagination from '../../components/pagination'
     import pageHeader from "../../components/pageHeader";
+    import file from '../../components/file.vue'
     export default {
         name: "business-teacher",
-        components: {pageHeader, pagination},
+        components: {pageHeader, pagination, file},
         data: function(){
           return {
               teacher: {},
               teachers: [],
               FILE_USE: FILE_USE,
-              url: process.env.VUE_APP_SERVER
+              url: process.env.VUE_APP_SERVER,
+              suffixs: ['jpg', 'png', 'jpeg', 'bmp']
           }
         },
         mounted() {
@@ -235,7 +243,12 @@
                     console.log(image);
                     vm.teacher.image = image;
                 })
-            }
+            },
+            afterUpload(resp){
+                let vm = this;
+                let image = resp.content;
+                vm.teacher.image = image;
+            },
         }
     }
 </script>
