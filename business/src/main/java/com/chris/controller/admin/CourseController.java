@@ -3,6 +3,7 @@ package com.chris.controller.admin;
 import com.chris.dto.CourseCategoryDto;
 import com.chris.dto.CourseContentDto;
 import com.chris.dto.CourseDto;
+import com.chris.dto.SortDto;
 import com.chris.dto.subpagedto.CoursePageDto;
 import com.chris.service.CourseCategoryService;
 import com.chris.service.CourseService;
@@ -58,6 +59,12 @@ public class CourseController {
     public CourseContentDto saveContent(@RequestBody CourseContentDto dto){
         courseService.saveContent(dto);
         return dto;
+    }
+
+    @PostMapping("/sort")
+    public SortDto sort(@RequestBody SortDto sortDto){
+        courseService.sort(sortDto);
+        return sortDto;
     }
 
 

@@ -133,4 +133,15 @@ public class CourseService {
         courseDto.setSections(sectionDtos);
         return courseDto;
     }
+
+    @Transactional
+    public void sort(SortDto sortDto){
+        myCourseMapper.updateSort(sortDto);
+        if(sortDto.getNewSort() > sortDto.getOldSort()){
+            myCourseMapper.moveSortsForward(sortDto);
+        }
+        else if(sortDto.getNewSort() < sortDto.getOldSort()){
+            myCourseMapper.moveSortsBackward(sortDto);
+        }
+    }
 }

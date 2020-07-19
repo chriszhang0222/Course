@@ -183,46 +183,46 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
-<!--        <div id="course-sort-modal" class="modal fade" tabindex="-1" role="dialog">-->
-<!--            <div class="modal-dialog" role="document">-->
-<!--                <div class="modal-content">-->
-<!--                    <div class="modal-header">-->
-<!--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
-<!--                        <h4 class="modal-title">排序</h4>-->
-<!--                    </div>-->
-<!--                    <div class="modal-body">-->
-<!--                        <form class="form-horizontal">-->
-<!--                            <div class="form-group">-->
-<!--                                <label class="control-label col-lg-3">-->
-<!--                                    当前排序-->
-<!--                                </label>-->
-<!--                                <div class="col-lg-9">-->
-<!--                                    <input class="form-control" v-model="sort.oldSort" name="oldSort" disabled>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="form-group">-->
-<!--                                <label class="control-label col-lg-3">-->
-<!--                                    新排序-->
-<!--                                </label>-->
-<!--                                <div class="col-lg-9">-->
-<!--                                    <input class="form-control" v-model="sort.newSort" name="newSort">-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </form>-->
-<!--                    </div>-->
-<!--                    <div class="modal-footer">-->
-<!--                        <button type="button" class="btn btn-white btn-default btn-round" data-dismiss="modal">-->
-<!--                            <i class="ace-icon fa fa-times"></i>-->
-<!--                            取消-->
-<!--                        </button>-->
-<!--                        <button type="button" class="btn btn-white btn-info btn-round" v-on:click="updateSort()">-->
-<!--                            <i class="ace-icon fa fa-plus blue"></i>-->
-<!--                            更新排序-->
-<!--                        </button>-->
-<!--                    </div>-->
-<!--                </div>&lt;!&ndash; /.modal-content &ndash;&gt;-->
-<!--            </div>&lt;!&ndash; /.modal-dialog &ndash;&gt;-->
-<!--        </div>&lt;!&ndash; /.modal &ndash;&gt;-->
+        <div id="course-sort-modal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Order</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label class="control-label col-lg-3">
+                                    Current Order
+                                </label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" v-model="sort.oldSort" name="oldSort" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-lg-3">
+                                    New Order
+                                </label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" v-model="sort.newSort" name="newSort">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white btn-default btn-round" data-dismiss="modal">
+                            <i class="ace-icon fa fa-times"></i>
+                            Cancel
+                        </button>
+                        <button type="button" class="btn btn-white btn-info btn-round" v-on:click="updateSort()">
+                            <i class="ace-icon fa fa-plus blue"></i>
+                            Update Order
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
 
     </div>
 </template>
@@ -260,6 +260,35 @@
             vm.list(1);
         },
         methods:{
+            updateSort(){
+                let vm = this;
+                if(vm.sort.newSort === vm.sort.oldSort){
+                    Toast.warning("Order didn't change");
+                    return;
+                }
+                Loading.show();
+                vm.$ajax.post(vm.url + '/business/admin/course/sort', vm.sort)
+                .then((res) => {
+                    Loading.hide();
+                    let resp = res.data;
+                    if(resp.success){
+                        Toast.success('Success');
+                        $("#course-sort-modal").modal("hide");
+                        vm.list(1);
+                    }else{
+                        Toast.warning(resp.message);
+                    }
+                })
+            },
+            openSortModal(course){
+                let vm = this;
+                vm.sort = {
+                    id: course.id,
+                    oldSort: course.sort,
+                    newSort: course.sort
+                }
+                $("#course-sort-modal").modal("show");
+            },
             toContent(course){
               let vm = this;
               SessionStorage.set(SESSION_KEY_COURSE, course);
