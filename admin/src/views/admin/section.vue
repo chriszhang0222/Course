@@ -98,7 +98,7 @@
                                           v-bind:after-upload="afterUpload"></file>
                                     <div v-show="section.video" class="row">
                                         <div class="col-md-6">
-                                            <video v-bind:src="section.video" controls="controls"/>
+                                            <video v-bind:src="section.video" controls="controls" id="video"/>
                                         </div>
                                     </div>
                                 </div>
@@ -121,25 +121,13 @@
 <!--                                </div>-->
 <!--                            </div>-->
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">时长</label>
+                                <label class="col-sm-2 control-label">Duration</label>
                                 <div class="col-sm-10">
                                     <input v-model="section.time" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">视频</label>
-<!--                                <div class="col-sm-10">-->
-<!--                                    <input v-model="section.video" class="form-control" disabled>-->
-<!--                                </div>-->
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">VOD</label>
-                                <div class="col-sm-10">
-                                    <input v-model="section.vod" class="form-control" disabled>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">收费</label>
+                                <label class="col-sm-2 control-label">Charge</label>
                                 <div class="col-sm-10">
                                     <select v-model="section.charge" class="form-control">
                                         <option v-for="o in SECTION_CHARGE" v-bind:value="o.key">{{o.value}}</option>
@@ -147,7 +135,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">顺序</label>
+                                <label class="col-sm-2 control-label">Order</label>
                                 <div class="col-sm-10">
                                     <input v-model="section.sort" class="form-control">
                                 </div>
@@ -196,6 +184,12 @@
         methods: {
             afterUpload(resp){
                 this.section.video = resp.content.path;
+                this.getTime();
+            },
+            getTime(){
+                let element = document.getElementById('video');
+                //let element = $('#video');
+                this.section.time = parseInt(element.duration, 10);
             },
             add: function(){
               let vm = this;
