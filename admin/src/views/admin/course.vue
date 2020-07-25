@@ -90,21 +90,22 @@
                                     <ul id="tree" class="ztree"></ul>
                                 </div>
                             </div>
-<!--                            <div class="form-group">-->
-<!--                                <label class="col-sm-2 control-label">封面</label>-->
-<!--                                <div class="col-sm-10">-->
-<!--                                    <big-file v-bind:input-id="'image-upload'"-->
-<!--                                              v-bind:text="'上传封面'"-->
-<!--                                              v-bind:suffixs="['jpg', 'jpeg', 'png']"-->
-<!--                                              v-bind:use="FILE_USE.COURSE.key"-->
-<!--                                              v-bind:after-upload="afterUpload"></big-file>-->
-<!--                                    <div v-show="course.image" class="row">-->
-<!--                                        <div class="col-md-6">-->
-<!--                                            <img v-bind:src="course.image" class="img-responsive">-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Front Image</label>
+                                <div class="col-sm-10">
+                                    <file v-bind:input-id="'image-upload'"
+                                          v-bind:url="'http://127.0.0.1:9003/file/admin/upload'"
+                                          v-bind:text="'Upload Image'"
+                                          v-bind:suffixs="['jpg', 'jpeg', 'png']"
+                                          v-bind:use="FILE_USE.COURSE.key"
+                                          v-bind:after-upload="afterUpload"></file>
+                                    <div v-show="course.image" class="row">
+                                        <div class="col-md-6">
+                                            <img v-bind:src="course.image" class="img-responsive">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Course Name</label>
                                 <div class="col-sm-10">
@@ -230,9 +231,10 @@
 <script>
     import pagination from '../../components/pagination'
     import pageHeader from "../../components/pageHeader";
+    import file from '../../components/file.vue'
     export default {
         name: "business-course",
-        components: {pageHeader, pagination},
+        components: {pageHeader, pagination, file},
         data: function(){
             return {
                 course: {},
@@ -261,6 +263,9 @@
             vm.list(1);
         },
         methods:{
+            afterUpload(resp){
+                this.course.image = resp.content.path;
+            },
             updateSort(){
                 let vm = this;
                 if(vm.sort.newSort === vm.sort.oldSort){

@@ -38,7 +38,7 @@ public class FileController {
         String fileName = file.getOriginalFilename();
         String suffix = fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase();
         String key = UuidUtil.getShortUuid();
-        String newFilePath = "teacher/" + key + "." + suffix;
+        String newFilePath = fileUse.getDesc().toLowerCase() + "/" + key + "." + suffix;
         String fullpath = filePath + newFilePath;
 
         createDirIfNotExist(fileUse.getDesc().toLowerCase());

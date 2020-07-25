@@ -39,7 +39,7 @@
             <tr v-for="section in sections">
                 <td>{{section.id}}</td>
                 <td>{{section.title}}</td>
-                <td>{{section.vod}}</td>
+                <td>{{section.video}}</td>
                 <td>{{section.time | formatSecond}}</td>
                 <td>{{SECTION_CHARGE | optionKV(section.charge)}}</td>
                 <td>{{section.sort}}</td>
@@ -85,6 +85,22 @@
                                 <label class="col-sm-2 control-label">Chapter</label>
                                 <div class="col-sm-10">
                                     <p class="form-control-static">{{chapter.name}}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Video</label>
+                                <div class="col-sm-10">
+                                    <file v-bind:input-id="'video-upload'"
+                                          v-bind:url="'http://127.0.0.1:9003/file/admin/upload'"
+                                          v-bind:text="'Upload Video'"
+                                          v-bind:suffixs="['mp4', 'mov']"
+                                          v-bind:use="FILE_USE.COURSE.key"
+                                          v-bind:after-upload="afterUpload"></file>
+                                    <div v-show="section.video" class="row">
+                                        <div class="col-md-6">
+                                            <video v-bind:src="section.video" controls="controls"/>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 <!--                            <div class="form-group">-->
@@ -153,9 +169,10 @@
 <script>
     import pagination from '../../components/pagination.vue'
     import pageHeader from "../../components/pageHeader";
+    import file from "../../components/file"
     export default {
         name: "business-section",
-        components: { pagination,pageHeader },
+        components: { pagination,pageHeader, file },
         data: function(){
           return {
               section: {},
@@ -177,6 +194,9 @@
 
         },
         methods: {
+            afterUpload(resp){
+                this.section.video = resp.content.path;
+            },
             add: function(){
               let vm = this;
               vm.section = {};
@@ -196,7 +216,6 @@
             },
             save() {
                 let vm = this;
-                vm.section.video = "";
                 let section = vm.section;
                 if (!Validator.require(section.title, "Title")
                     || !Validator.length(section.title, "title", 1, 50)
