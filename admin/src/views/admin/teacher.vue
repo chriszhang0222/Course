@@ -85,6 +85,7 @@
                                           v-bind:after-upload="afterUpload"
                                           v-bind:text="'Photo Upload'"
                                           v-bind:input-id="'image-upload'"
+                                          v-bind:use="FILE_USE.TEACHER.key"
                                     ></file>
 <!--                                    <input type="file" v-on:change="uploadImage()" ref="file" id="file-upload-input">-->
                                     <div v-show="teacher.image" class="row">

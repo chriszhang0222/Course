@@ -5,8 +5,8 @@ import lombok.Getter;
 
 @Getter
 public enum FileUse {
-    COURSE("C", "Course"),
-    TEACHER("T", "Teacher");
+    COURSE("C", "course"),
+    TEACHER("T", "teacher");
 
     FileUse(String code, String desc) {
         this.code = code;
@@ -15,6 +15,14 @@ public enum FileUse {
 
     private String code;
     private String desc;
+
+    public static FileUse getByCode(String code){
+        for(FileUse e:FileUse.values()){
+            if(e.getCode().equals(code))
+                return e;
+        }
+        return null;
+    }
 
 
 }
