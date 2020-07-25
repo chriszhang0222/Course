@@ -247,7 +247,7 @@
             },
             afterUpload(resp){
                 let vm = this;
-                let image = resp.content;
+                let image = resp.content.path;
                 vm.teacher.image = image;
             },
         }

@@ -29,7 +29,7 @@ public class FileController {
     private FileService fileService;
 
     @RequestMapping("/upload")
-    public CommonResponse upload(@RequestParam MultipartFile file, String use) throws Exception{
+    public FileDto upload(@RequestParam MultipartFile file, String use) throws Exception{
         log.info("Start uploading file:{}", file);
         log.info(String.valueOf(file.getSize()));
 
@@ -46,9 +46,9 @@ public class FileController {
         File dest = new File(fullpath);
         file.transferTo(dest);
         log.info(dest.getAbsolutePath());
-        saveFile(fileName, newFilePath, file, suffix);
-
-        return new CommonResponse("200", "OK", fileDomain + newFilePath);
+        FileDto fileDto = saveFile(fileName, newFilePath, file, suffix);
+        fileDto.setPath(fileDomain + newFilePath);
+        return fileDto;
     }
 
     public void createDirIfNotExist(String dir){
@@ -58,7 +58,7 @@ public class FileController {
         }
     }
 
-    public void saveFile(String fileName, String filePath, MultipartFile file, String suffix){
+    public FileDto saveFile(String fileName, String filePath, MultipartFile file, String suffix){
         FileDto fileDto = new FileDto();
         fileDto.setName(fileName);
         fileDto.setPath(filePath);
@@ -66,6 +66,7 @@ public class FileController {
         fileDto.setSuffix(suffix);
         fileDto.setUse("");
         fileService.save(fileDto);
+        return fileDto;
     }
 
     @PostMapping("/list")
