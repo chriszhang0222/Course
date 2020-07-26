@@ -114,3 +114,10 @@ create table `file`(
     primary key (id),
     unique key `path_unique` (path)
 )engine=innodb default charset=utf8mb4;
+
+
+alter table file add column (`shard_index` int);
+alter table file add column (`shard_size` int);
+alter table file add column (`shard_total` int);
+alter table file add column (`key` varchar(32));
+alter table file add unique key key_unique(`key`);

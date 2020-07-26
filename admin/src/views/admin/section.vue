@@ -90,12 +90,12 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Video</label>
                                 <div class="col-sm-10">
-                                    <file v-bind:input-id="'video-upload'"
+                                    <big-file v-bind:input-id="'video-upload'"
                                           v-bind:url="'http://127.0.0.1:9003/file/admin/upload'"
                                           v-bind:text="'Upload Video'"
                                           v-bind:suffixs="['mp4', 'mov']"
                                           v-bind:use="FILE_USE.COURSE.key"
-                                          v-bind:after-upload="afterUpload"></file>
+                                          v-bind:after-upload="afterUpload"></big-file>
                                     <div v-show="section.video" class="row">
                                         <div class="col-md-6">
                                             <video v-bind:src="section.video" controls="controls" id="video"/>
@@ -158,9 +158,10 @@
     import pagination from '../../components/pagination.vue'
     import pageHeader from "../../components/pageHeader";
     import file from "../../components/file"
+    import bigFile from "../../components/big-file"
     export default {
         name: "business-section",
-        components: { pagination,pageHeader, file },
+        components: { pagination,pageHeader, file, bigFile },
         data: function(){
           return {
               section: {},
