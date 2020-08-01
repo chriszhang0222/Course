@@ -169,6 +169,7 @@
             all(){
                 let vm = this;
                 Loading.show();
+                console.log(vm.url);
                 vm.$ajax.post(vm.url + '/business/admin/category/all')
                 .then((res) => {
                     Loading.hide();

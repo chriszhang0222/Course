@@ -3,8 +3,11 @@ package com.chris.mapper;
 import com.chris.domain.File;
 import com.chris.domain.FileExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface FileMapper {
     long countByExample(FileExample example);
 

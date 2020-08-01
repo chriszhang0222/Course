@@ -91,7 +91,7 @@
                                 <label class="col-sm-2 control-label">Video</label>
                                 <div class="col-sm-10">
                                     <big-file v-bind:input-id="'video-upload'"
-                                          v-bind:url="'http://127.0.0.1:9003/file/admin/upload'"
+                                          v-bind:url="url"
                                           v-bind:text="'Upload Video'"
                                           v-bind:suffixs="['mp4', 'mov']"
                                           v-bind:use="FILE_USE.COURSE.key"

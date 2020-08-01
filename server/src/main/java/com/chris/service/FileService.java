@@ -12,6 +12,7 @@ import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -36,10 +37,12 @@ public class FileService {
 
     public void save(FileDto fileDto){
         File file = CopyUtil.copy(fileDto, File.class);
-        if(StringUtils.isEmpty(file.getId())){
+        File fileDb = selectByKey(fileDto.getKey());
+        if(fileDb == null){
             insert(file);
         }else{
-            update(file);
+            fileDb.setShardIndex(fileDto.getShardIndex());
+            update(fileDb);
         }
     }
 
@@ -63,6 +66,14 @@ public class FileService {
 
     public File selectByKey(String key){
         FileExample example = new FileExample();
-        return null;
+        example.createCriteria().andKeyEqualTo(key);
+        List<File> files = fileMapper.selectByExample(example);
+        if(CollectionUtils.isEmpty(files))
+            return null;
+        return files.get(0);
+    }
+
+    public FileDto findByKey(String key){
+        return CopyUtil.copy(selectByKey(key), FileDto.class);
     }
 }

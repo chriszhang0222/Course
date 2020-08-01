@@ -48,7 +48,7 @@
                 file: {},
                 files: [],
                 FILE_USE: FILE_USE,
-                url: 'http://127.0.0.1:9003'
+                url: process.env.VUE_APP_SERVER
             }
         },
         mounted() {

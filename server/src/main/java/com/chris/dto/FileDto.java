@@ -19,10 +19,17 @@ public class FileDto {
     private Integer size;
     private String use;
 
+    private Integer shardIndex;
+    private Integer shardSize;
+    private Integer shardTotal;
+    private String key;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createAt;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateAt;
+
+    private String shard;
 
 }
