@@ -121,3 +121,5 @@ alter table file add column (`shard_size` int);
 alter table file add column (`shard_total` int);
 alter table file add column (`key` varchar(32));
 alter table file add unique key key_unique(`key`);
+
+alter table section add column (`vod` char(32));
