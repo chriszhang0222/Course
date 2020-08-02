@@ -127,6 +127,12 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-sm-2 control-label">Video</label>
+                                <div class="col-sm-10">
+                                    <input v-model="section.video" class="form-control" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-sm-2 control-label">Duration</label>
                                 <div class="col-sm-10">
                                     <input v-model="section.time" class="form-control">
@@ -156,7 +162,7 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
-<!--        <modal-player ref="modalPlayer"></modal-player>-->
+        <modal-player ref="modalPlayer"></modal-player>
     </div>
 </template>
 
@@ -167,9 +173,10 @@
     import bigFile from "../../components/big-file"
     import vod from "../../components/vod";
     import player from "../../components/player";
+    import ModalPlayer from "../../components/modal-player";
     export default {
         name: "business-section",
-        components: { pagination,pageHeader, file, bigFile, vod, player },
+        components: { pagination,pageHeader, file, bigFile, vod, player, ModalPlayer },
         data: function(){
           return {
               section: {},
@@ -193,14 +200,16 @@
         methods: {
             afterUpload(resp){
                 this.section.video = resp.content.path;
+                this.section.vod = resp.content.vod;
                 this.getTime();
+                this.$refs.player.playUrl(this.section.video);
             },
             getTime(){
                 setTimeout(()=>{
                     let element = document.getElementById('video');
                     //let element = $('#video');
                     this.section.time = parseInt(element.duration, 10);
-                }, 100)
+                }, 1000)
             },
             add: function(){
               let vm = this;
@@ -229,6 +238,7 @@
                 }
                 section.chapterId = vm.chapter.id;
                 section.courseId = vm.course.id;
+                section.video = "";
                 Loading.show();
                 let url = vm.url;
                 console.log(section);

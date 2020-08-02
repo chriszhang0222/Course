@@ -4,7 +4,7 @@
     v-bind:suffixs="suffixs"
     v-bind:use="use"
     v-bind:url="'vod'"
-    v-bind:shard-size="1000 * 1024 * 1024"
+    v-bind:shard-size="1024 * 1024 * 1024 * 10"
     v-bind:after-upload="afterUpload"
     >
 
