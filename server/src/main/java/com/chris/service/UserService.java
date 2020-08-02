@@ -1,5 +1,7 @@
 package com.chris.service;
 
+import com.chris.Exception.BusinessException;
+import com.chris.Exception.BusinessExceptionCode;
 import com.chris.domain.User;
 import com.chris.domain.UserExample;
 import com.chris.dto.PageDto;
@@ -45,7 +47,7 @@ public class UserService {
         user.setId(UuidUtil.getShortUuid());
         User userdb = this.selectByLoginName(user.getLoginName());
         if(userdb != null){
-            throw new RuntimeException("User Name already Exist");
+            throw new BusinessException(BusinessExceptionCode.USER_LOGIN_NAME_EXIST);
         }
         userMapper.insert(user);
 
