@@ -124,3 +124,16 @@ alter table file add unique key key_unique(`key`);
 alter table file add column (`vod` char(32));
 
 alter table section add column (`vod` char(32));
+
+
+drop table if exists `user`;
+create table `user`(
+    `id` char(8) not null,
+    `login_name` varchar(50) not null,
+    `name` varchar(50),
+    `password` char(32),
+    primary key (id),
+    unique key (login_name)
+)engine=innodb default charset=utf8mb4;
+
+insert into user (id, login_name, name, password) values ('100000', 'admin', 'admin', '31415926');
