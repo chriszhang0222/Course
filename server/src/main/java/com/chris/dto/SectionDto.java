@@ -24,6 +24,7 @@ public class SectionDto {
     private Integer time;
     private String charge;
     private Integer sort;
+    private String vod;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createdAt;

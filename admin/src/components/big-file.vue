@@ -33,7 +33,7 @@
                 default: ""
             },
             url: {
-                default: process.env.VUE_APP_SERVER
+                default: "upload"
             },
             shardSize: {
                 default: 1024 * 1024 * 10
@@ -75,8 +75,9 @@
 
             },
             check(param){
+                let url = process.env.VUE_APP_SERVER;
                 let vm = this;
-                vm.$ajax.get(vm.url + '/file/admin/check/' + param.key)
+                vm.$ajax.get(url + '/file/admin/check/' + param.key)
                 .then((res) => {
                     let resp = res.data;
                     if(resp.success){
@@ -102,6 +103,7 @@
             },
             upload(param){
                 let vm = this;
+                let url = process.env.VUE_APP_SERVER;
                 let shardIndex = param.shardIndex;
                 let shardTotal = param.shardTotal;
                 let shardSize = param.shardSize;
@@ -112,7 +114,7 @@
                 fileReader.onload = (e) => {
                     let base64 = e.target.result;
                     param.shard = base64;
-                    vm.$ajax.post(vm.url + '/file/admin/upload', param)
+                    vm.$ajax.post(url + "/file/admin/" + vm.url, param)
                     .then((res) => {
                         let resp = res.data;
                         Progress.show(parseInt(shardIndex*100/shardTotal));
