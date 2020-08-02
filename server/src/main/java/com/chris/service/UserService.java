@@ -71,4 +71,13 @@ public class UserService {
     public void delete(String id){
         userMapper.deleteByPrimaryKey(id);
     }
+
+    public void savePassword(UserDto userDto){
+        User user = new User();
+        user.setId(userDto.getId());
+        user.setPassword(userDto.getPassword());
+        userMapper.updateByPrimaryKeySelective(user);
+    }
+
+
 }
