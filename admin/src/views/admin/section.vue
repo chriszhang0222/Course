@@ -113,8 +113,8 @@
                                          v-bind:after-upload="afterUpload"></vod>
                                     <div v-show="section.video" class="row">
                                         <div class="col-md-9">
-<!--                                            <player v-bind:player-id="'form-player-div'"-->
-<!--                                                    ref="player"></player>-->
+                                            <player v-bind:player-id="'form-player-div'"
+                                                    ref="player"></player>
                                             <video v-bind:src="section.video" id="video" controls="controls" class="hidden"></video>
                                         </div>
                                     </div>
@@ -166,9 +166,10 @@
     import file from "../../components/file"
     import bigFile from "../../components/big-file"
     import vod from "../../components/vod";
+    import player from "../../components/player";
     export default {
         name: "business-section",
-        components: { pagination,pageHeader, file, bigFile, vod },
+        components: { pagination,pageHeader, file, bigFile, vod, player },
         data: function(){
           return {
               section: {},

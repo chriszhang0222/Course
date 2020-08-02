@@ -31,5 +31,6 @@ public class FileDto {
     private Date updateAt;
 
     private String shard;
+    private String vod;
 
 }
