@@ -10,6 +10,7 @@ import Category from './views/admin/category.vue';
 import Content from './views/admin/content.vue';
 import Teacher from './views/admin/teacher.vue';
 import File from './views/admin/file.vue';
+import User from './views/admin/user.vue';
 Vue.use(Router);
 export default new Router({
     mode:'history',
@@ -50,6 +51,10 @@ export default new Router({
             {
                 path: 'file/file', name: 'file/file',
                 component: File
+            },
+            {
+                path: 'system/user', name: 'system/user',
+                component: User
             }
         ]
         },
