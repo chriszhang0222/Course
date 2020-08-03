@@ -4,6 +4,7 @@ import com.chris.Exception.BusinessException;
 import com.chris.Exception.BusinessExceptionCode;
 import com.chris.domain.User;
 import com.chris.domain.UserExample;
+import com.chris.dto.LoginDto;
 import com.chris.dto.PageDto;
 import com.chris.dto.UserDto;
 import com.chris.mapper.UserMapper;
@@ -77,6 +78,20 @@ public class UserService {
         user.setId(userDto.getId());
         user.setPassword(userDto.getPassword());
         userMapper.updateByPrimaryKeySelective(user);
+    }
+
+    public LoginDto login(UserDto userDto){
+        User user = selectByLoginName(userDto.getLoginName());
+        if(user == null){
+            throw new BusinessException(BusinessExceptionCode.LOGIN_USER_ERROR);
+        }else{
+            if(user.getPassword().equals(userDto.getPassword())){
+                LoginDto loginDto = CopyUtil.copy(user, LoginDto.class);
+                return loginDto;
+            }else{
+                throw new BusinessException(BusinessExceptionCode.LOGIN_USER_ERROR);
+            }
+        }
     }
 
 

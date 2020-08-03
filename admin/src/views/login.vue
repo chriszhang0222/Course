@@ -116,6 +116,8 @@
                 .then((res) => {
                     let resp = res.data;
                     if(resp.success){
+                        let user = resp.content;
+                        SessionStorage.set(SESSION_KEY_LOGIN_USER, user);
                         this.$router.push("/welcome");
                     }else{
                         Toast.warning(resp.message);
