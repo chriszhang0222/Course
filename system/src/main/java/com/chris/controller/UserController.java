@@ -1,5 +1,6 @@
 package com.chris.controller;
 
+import com.chris.domain.User;
 import com.chris.dto.PageDto;
 import com.chris.dto.UserDto;
 import com.chris.service.UserService;
@@ -49,6 +50,22 @@ public class UserController {
         userDto.setPassword(DigestUtils.md5DigestAsHex(userDto.getPassword().getBytes()));
         userService.savePassword(userDto);
         return userDto;
+    }
+
+    @PostMapping("/login")
+    public CommonResponse login(@RequestBody UserDto userDto){
+        CommonResponse res = new CommonResponse();
+        userDto.setPassword(DigestUtils.md5DigestAsHex(userDto.getPassword().getBytes()));
+        User userDB = userService.selectByLoginName(userDto.getLoginName());
+        if(userDB == null){
+            res.setSuccess(false);
+            res.setMessage("User does not exist");
+        }
+        else if(!userDB.getPassword().equals(userDto.getPassword())){
+            res.setSuccess(false);
+            res.setMessage("Wrong Password");
+        }
+        return res;
     }
 
 }

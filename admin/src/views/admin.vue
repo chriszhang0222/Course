@@ -582,6 +582,7 @@
             $('body').removeClass('login-layout light-login');
             $('body').attr('class', 'no-skin');
             this.activeSidebar(this.$route.name.replace("/", "-") + "-sidebar");
+            $.getScript('/ace/assets/js/ace.min.js');
         },
         watch: {
             $route: {
