@@ -101,8 +101,7 @@
             $('body').attr('class', 'login-layout blur-login');
             let localUser = LocalStorage.get(LOCAL_KEY_REMEMBER_USER);
             if(localUser !== undefined && localUser !== null){
-                this.user.loginName = localUser.loginName;
-                this.user.password = localUser.password;
+                this.user = localUser;
             }
         },
         methods:{
