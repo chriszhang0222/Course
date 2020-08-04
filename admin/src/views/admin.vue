@@ -307,7 +307,7 @@
                             <li class="divider"></li>
 
                             <li>
-                                <a href="#">
+                                <a href="#" v-on:click="logout">
                                     <i class="ace-icon fa fa-power-off"></i>
                                     Logout
                                 </a>
@@ -581,6 +581,7 @@
         data: function(){
           return {
               loginUser: {},
+              url: process.env.VUE_APP_SERVER
           }
         },
         mounted:function(){
@@ -588,8 +589,8 @@
             $('body').attr('class', 'no-skin');
             this.activeSidebar(this.$route.name.replace("/", "-") + "-sidebar");
             $.getScript('/ace/assets/js/ace.min.js');
-            this.loginUser = SessionStorage.get(SESSION_KEY_LOGIN_USER);
-            if(this.loginUser == null){
+            this.loginUser = Tool.getLoginUser();
+            if(!this.loginUser.loginName && !this.loginUser.name){
                 this.$router.push('/login');
             }
         },
@@ -619,6 +620,16 @@
                     parentLi.siblings().find("li").removeClass("active");
                     parentLi.addClass("open active");
                 }
+            },
+            logout(){
+              this.loginUser = {};
+              this.$ajax.get(this.url + '/system/admin/user/logout')
+                .then((res) => {
+                    if(res.data.success){
+                        Tool.logOutUser();
+                        this.$router.push('/login');
+                    }
+                })
             },
         }
     }

@@ -1,5 +1,6 @@
 package com.chris.controller;
 
+import com.chris.Constants;
 import com.chris.domain.User;
 import com.chris.dto.LoginDto;
 import com.chris.dto.PageDto;
@@ -12,6 +13,7 @@ import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @Slf4j
@@ -54,11 +56,18 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public LoginDto login(@RequestBody UserDto userDto){
+    public LoginDto login(@RequestBody UserDto userDto, HttpServletRequest request){
         CommonResponse res = new CommonResponse();
         userDto.setPassword(DigestUtils.md5DigestAsHex(userDto.getPassword().getBytes()));
         LoginDto loginDto = userService.login(userDto);
+        request.getSession().setAttribute(Constants.LOGIN_USER, loginDto);
         return loginDto;
+    }
+
+    @GetMapping("/logout")
+    public CommonResponse logout(HttpServletRequest request){
+        request.getSession().removeAttribute(Constants.LOGIN_USER);
+        return new CommonResponse("200", "OK");
     }
 
 }

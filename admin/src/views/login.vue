@@ -93,15 +93,21 @@
               user: {},
               url: process.env.VUE_APP_SERVER,
               error: '',
-              remember: null
+              remember: true
           }
         },
         mounted:function(){
             $('body').removeClass('no-skin');
             $('body').attr('class', 'login-layout blur-login');
+            let localUser = LocalStorage.get(LOCAL_KEY_REMEMBER_USER);
+            if(localUser !== undefined && localUser !== null){
+                this.user.loginName = localUser.loginName;
+                this.user.password = localUser.password;
+            }
         },
         methods:{
             login(){
+                let vm = this;
                 if(!Validator.require(this.user.loginName, 'loginName')
                     || !Validator.require(this.user.password, 'password')){
                     Toast.warning('You Must Submit username and password!!');
@@ -110,6 +116,7 @@
                 }
 
                 let url = this.url;
+                let oldPassword = this.user.password;
                 let password = hex_md5(this.user.password + KEY);
                 this.user.password = password;
                 this.$ajax.post(url + '/system/admin/user/login', this.user)
@@ -118,6 +125,14 @@
                     if(resp.success){
                         let user = resp.content;
                         SessionStorage.set(SESSION_KEY_LOGIN_USER, user);
+                        if(vm.remember){
+                            LocalStorage.set(LOCAL_KEY_REMEMBER_USER, {
+                                loginName: vm.user.loginName,
+                                password: oldPassword
+                            });
+                        }else{
+                            LocalStorage.set(LOCAL_KEY_REMEMBER_USER, null);
+                        }
                         this.$router.push("/welcome");
                     }else{
                         Toast.warning(resp.message);
