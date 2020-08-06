@@ -44,7 +44,7 @@
                     <label class="block clearfix">
                           <span class="block input-icon input-icon-right">
                             <div class="input-group">
-                              <input type="text" class="form-control" placeholder="kaptcha">
+                              <input v-model="user.imageCode" type="text" class="form-control" placeholder="kaptcha">
                               <span class="input-group-addon" id="basic-addon2">
                                 <img v-on:click="loadImageCode()" id="image-code" alt="kaptcha"/>
                               </span>
@@ -116,7 +116,10 @@
                 if(!Validator.require(this.user.loginName, 'loginName')
                     || !Validator.require(this.user.password, 'password')){
                     Toast.warning('You Must Submit username and password!!');
-                    this.user = {};
+                    return;
+                }
+                if(!Validator.require(this.user.imageCode, 'imageCode')){
+                    Toast.warning('You must submit imagecode!');
                     return;
                 }
                 let md5 = hex_md5(vm.user.password);
@@ -124,6 +127,7 @@
                 if (rememberUser.md5 !== md5){
                     vm.user.password = hex_md5(vm.user.password + KEY);
                 }
+                vm.user.imageCodeToken = vm.imageToken;
 
                 let url = this.url;
                 this.$ajax.post(url + '/system/admin/user/login', this.user)
@@ -143,7 +147,8 @@
                             LocalStorage.set(LOCAL_KEY_REMEMBER_USER, null);
                         }
                         this.$router.push("/welcome");
-                    }else{
+                    }
+                    else{
                         Toast.warning(resp.message);
                         this.user = {};
                     }

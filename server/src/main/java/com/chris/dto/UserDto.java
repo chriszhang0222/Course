@@ -14,5 +14,5 @@ public class UserDto {
     private String name;
     private String password;
     private String imageCode;
-    private String imageToken;
+    private String imageCodeToken;
 }

@@ -8,6 +8,16 @@ import filter from './filter/filter'
 Vue.config.productionTip = false;
 Vue.prototype.$ajax = axios;
 
+axios.defaults.withCredentials = true;
+
+axios.interceptors.request.use(function(config){
+    let token = Tool.getLoginUser().token;
+    if(Tool.isNotEmpty(token)){
+        config.headers.token = token;
+    }
+    return config;
+});
+
 const requireComponent = require.context(
     // 其组件目录的相对路径
     './components',
@@ -46,6 +56,20 @@ Object.keys(filter).forEach(key => {
     Vue.filter(key, filter[key])
 });
 
+router.beforeEach((to, from, next) =>{
+   if(to.matched.some(function(item){
+       return item.meta.loginRequire;
+   })) {
+       let loginUser = Tool.getLoginUser();
+       if(Tool.isEmpty(loginUser)){
+           next('/login');
+       }else{
+           next();
+       }
+   }else{
+       next();
+   }
+});
 new Vue({
     el: '#app',
     router,
