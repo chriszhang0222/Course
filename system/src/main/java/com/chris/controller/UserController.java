@@ -77,6 +77,8 @@ public class UserController {
             res.setSuccess(false);
             res.setMessage("ImageCode is not correct");
             return res;
+        }else{
+            redisTemplate.delete(userDto.getImageCodeToken());
         }
         LoginDto loginDto = userService.login(userDto);
         String token = Constants.LOGIN_USER + "-"+ UuidUtil.getShortUuid();
@@ -86,9 +88,10 @@ public class UserController {
         return res;
     }
 
-    @GetMapping("/logout")
-    public CommonResponse logout(HttpServletRequest request){
-        request.getSession().removeAttribute(Constants.LOGIN_USER);
+    @GetMapping("/logout/{token}")
+    public CommonResponse logout(@PathVariable String token){
+//        request.getSession().removeAttribute(Constants.LOGIN_USER);
+        redisTemplate.delete(token);
         return new CommonResponse("200", "OK");
     }
 

@@ -622,12 +622,15 @@
                 }
             },
             logout(){
-              this.loginUser = {};
-              this.$ajax.get(this.url + '/system/admin/user/logout')
+              let vm = this;
+              this.$ajax.get(this.url + '/system/admin/user/logout/' + this.loginUser.token)
                 .then((res) => {
                     if(res.data.success){
+                        vm.loginUser = {};
                         Tool.logOutUser();
                         this.$router.push('/login');
+                    }else{
+                        Toast.warning(res.data.message);
                     }
                 })
             },
