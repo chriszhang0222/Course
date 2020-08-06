@@ -12,4 +12,5 @@ public class LoginDto {
     private String id;
     private String loginName;
     private String name;
+    private String token;
 }
