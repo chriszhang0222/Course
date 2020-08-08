@@ -1,5 +1,6 @@
 package com.chris.filter;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.stereotype.Component;
@@ -7,13 +8,13 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 
 @Component
-public class LoginAdminFilterFactory extends AbstractGatewayFilterFactory<Object> {
+public class LoginAdminGatewayFilterFactory extends AbstractGatewayFilterFactory<Object> {
 
     @Resource
-    private LoginAdminFilter adminFilter;
+    LoginAdminGatewayFilter loginAdminGatewayFilter;
 
     @Override
     public GatewayFilter apply(Object config) {
-        return adminFilter;
+        return loginAdminGatewayFilter;
     }
 }

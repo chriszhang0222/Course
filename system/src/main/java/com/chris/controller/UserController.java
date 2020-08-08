@@ -12,6 +12,7 @@ import com.chris.util.UuidUtil;
 import com.chris.util.ValidatorUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class UserController {
     private UserService userService;
 
     @Resource
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
     @PostMapping("/list")
     public PageDto list(@RequestBody PageDto pageDto){
@@ -81,7 +82,7 @@ public class UserController {
             redisTemplate.delete(userDto.getImageCodeToken());
         }
         LoginDto loginDto = userService.login(userDto);
-        String token = Constants.LOGIN_USER + "-"+ UuidUtil.getShortUuid();
+        String token = Constants.LOGIN_USER + "-" + UuidUtil.getShortUuid();
         loginDto.setToken(token);
         redisTemplate.opsForValue().set(token, JSON.toJSONString(loginDto), 3600, TimeUnit.SECONDS);
         res.setContent(loginDto);
