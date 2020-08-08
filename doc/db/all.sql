@@ -137,3 +137,24 @@ create table `user`(
 )engine=innodb default charset=utf8mb4;
 
 insert into user (id, login_name, name, password) values ('100000', 'admin', 'admin', '31415926');
+
+drop table if exists `resouece`;
+create table `resource`(
+    `id` char(6) not null,
+    `parent` char(6),
+    `name` varchar (100) not null,
+    `page` varchar(100) null ,
+    `request` varchar (200) null ,
+    primary key (id)
+)engine=innodb default charset=utf8mb4;
+
+insert into resource values ('00', null, 'System Management', null, null);
+insert into resource values ('0101', '00', 'User Management', '/system/user', null);
+insert into resource values ('010101', '0101', 'Save', null, '["/system/admin/user/list", "/system/admin/user/save"]');
+insert into resource values ('010102', '0101', 'Delete', null, '["/system/admin/user/delete"]');
+insert into resource values ('010103', '0101', 'Reset Password', null, '["/system/admin/user/save-password"]');
+
+insert into resource values ('0102', '00', 'Resource Management', '/system/resource', null);
+insert into resource values ('010201', '0102', 'Save/Show', null, '["/system/admin/resource"]');
+insert into resource values ('0103', '00', 'Role Management', '/system/role', null);
+insert into resource values ('010301', '0103', 'Role/Auth', null, '["/system/admin/role"]')

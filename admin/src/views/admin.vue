@@ -436,6 +436,23 @@
                         </li>
                     </ul>
                 </li>
+                <li class="">
+                    <a href="#" class="dropdown-toggle">
+                        <i class="menu-icon fa fa-refresh"></i>
+                        <span class="menu-text">Resource</span>
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+                    <b class="arrow"></b>
+                    <ul class="submenu">
+                        <li class="" id="system-resource-sidebar">
+                            <router-link to="/system/resource">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Resource Management
+                            </router-link>
+                            <b class="arrow"></b>
+                        </li>
+                    </ul>
+                </li>
             </ul><!-- /.nav-list -->
 
             <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">

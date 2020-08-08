@@ -11,6 +11,8 @@ import Content from './views/admin/content.vue';
 import Teacher from './views/admin/teacher.vue';
 import File from './views/admin/file.vue';
 import User from './views/admin/user.vue';
+import Resource from './views/admin/resource.vue';
+
 Vue.use(Router);
 export default new Router({
     mode:'history',
@@ -59,6 +61,10 @@ export default new Router({
                 {
                     path: 'system/user', name: 'system/user',
                     component: User
+                },
+                {
+                    path: "system/resource", name: "system/resource",
+                    component: Resource,
                 }
             ]
         },
