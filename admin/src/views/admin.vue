@@ -361,7 +361,7 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
+                <li class="" v-if="hasResource('03')">
                     <a href="#" class="dropdown-toggle">
                         <i class="menu-icon fa fa-database"></i>
                         <span class="menu-text">Business</span>
@@ -372,13 +372,13 @@
                     <b class="arrow"></b>
 
                     <ul class="submenu">
-                        <li class="" id="business-category-sidebar">
+                        <li v-if="hasResource('0301')" class="" id="business-category-sidebar">
                             <router-link to="/business/category">
                                 <i class="menu-icon fa fa-caret-right"></i>
                                 Category Management
                             </router-link>
                         </li>
-                        <li class="" id="business-chapter-sidebar">
+                        <li v-if="hasResource('0302')" class="" id="business-chapter-sidebar">
                             <router-link to="/business/chapter">
                                 <i class="menu-icon fa fa-caret-right"></i>
                                 Chapter Management
@@ -386,14 +386,14 @@
 
                             <b class="arrow"></b>
                         </li>
-                        <li class="" id="business-course-sidebar">
+                        <li class="" v-if="hasResource('0302')" id="business-course-sidebar">
                             <router-link to="/business/course">
                                 <i class="menu-icon fa fa-caret-right"></i>
                                 Course Management
                             </router-link>
                             <b class="arrow"></b>
                         </li>
-                        <li class="" id="business-teacher-sidebar">
+                        <li v-if="hasResource('0303')" class="" id="business-teacher-sidebar">
                             <router-link to="/business/teacher">
                                 <i class="menu-icon fa fa-caret-right"></i>
                                 Teacher Management
@@ -401,7 +401,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="">
+                <li class="" v-if="hasResource('02')">
                     <a href="#" class="dropdown-toggle">
                         <i class="menu-icon fa fa-file"></i>
                         <span class="menu-text">File Management</span>
@@ -409,7 +409,7 @@
                     </a>
                     <b class="arrow"></b>
                     <ul class="submenu">
-                        <li class="" id="file-file-sidebar">
+                        <li v-if="hasResource('0201')" class="" id="file-file-sidebar">
                             <router-link to="/file/file">
                                 <i class="menu-icon fa fa-caret-right"></i>
                                 File Management
@@ -419,7 +419,7 @@
                     </ul>
 
                 </li>
-                <li class="">
+                <li class="" v-if="hasResource('01')">
                     <a href="#" class="dropdown-toggle">
                         <i class="menu-icon fa fa-user"></i>
                         <span class="menu-text">User Management</span>
@@ -427,7 +427,7 @@
                     </a>
                     <b class="arrow"></b>
                     <ul class="submenu">
-                        <li class="" id="system-user-sidebar">
+                        <li v-if="hasResource('0101')" class="" id="system-user-sidebar">
                             <router-link to="/system/user">
                                 <i class="menu-icon fa fa-caret-right"></i>
                                 User Management
@@ -436,7 +436,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="">
+                <li class="" v-if="hasResource('01')">
                     <a href="#" class="dropdown-toggle">
                         <i class="menu-icon fa fa-refresh"></i>
                         <span class="menu-text">Resource</span>
@@ -444,14 +444,14 @@
                     </a>
                     <b class="arrow"></b>
                     <ul class="submenu">
-                        <li class="" id="system-resource-sidebar">
+                        <li v-if="hasResource('0102')" class="" id="system-resource-sidebar">
                             <router-link to="/system/resource">
                                 <i class="menu-icon fa fa-caret-right"></i>
                                 Resource Management
                             </router-link>
                             <b class="arrow"></b>
                         </li>
-                        <li class="" id="system-role-sidebar">
+                        <li class="" v-if="hasResource('0103')" id="system-role-sidebar">
                             <router-link to="/system/role">
                                 <i class="menu-icon fa fa-caret-right"></i>
                                 Role Management
@@ -624,6 +624,11 @@
                     // sidebar激活样式方法二
                     let _this = this;
 
+                    if(!this.hasResourceRouter(val.name)){
+                        this.$router.push("/welcome");
+                        return;
+                    }
+
                     _this.$nextTick(function(){  //页面加载完成后执行
                         _this.activeSidebar(_this.$route.name.replace("/", "-") + "-sidebar");
                     })
@@ -631,6 +636,22 @@
             }
         },
         methods: {
+            hasResourceRouter(router){
+                let resources = Tool.getLoginUser().resources;
+                console.log(resources);
+                if(Tool.isEmpty(resources)){
+                    return false;
+                }
+                for(let i=0;i<resources.length;i++){
+                    if(router === resources[i].page){
+                        return true;
+                    }
+                }
+                return false;
+            },
+            hasResource(id){
+              return Tool.hasResource(id);
+            },
             activeSidebar: function (id) {
                 // 兄弟菜单去掉active样式，自身增加active样式
                 $("#" + id).siblings().removeClass("active");
