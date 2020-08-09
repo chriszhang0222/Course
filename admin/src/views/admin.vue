@@ -451,6 +451,13 @@
                             </router-link>
                             <b class="arrow"></b>
                         </li>
+                        <li class="" id="system-role-sidebar">
+                            <router-link to="/system/role">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Role Management
+                            </router-link>
+                            <b class="arrow"></b>
+                        </li>
                     </ul>
                 </li>
             </ul><!-- /.nav-list -->

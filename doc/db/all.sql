@@ -158,3 +158,21 @@ insert into resource values ('0102', '00', 'Resource Management', '/system/resou
 insert into resource values ('010201', '0102', 'Save/Show', null, '["/system/admin/resource"]');
 insert into resource values ('0103', '00', 'Role Management', '/system/role', null);
 insert into resource values ('010301', '0103', 'Role/Auth', null, '["/system/admin/role"]')
+
+
+drop table if exists `role`;
+create table `role`(
+    `id` char(6) not null ,
+    `name` varchar(50) not null ,
+    `desc` varchar(100),
+    primary key (id)
+)engine=innodb default charset=utf8mb4;
+
+
+drop table if exists `role_resource`;
+create table `role_resource`(
+    `id` char(6) not null ,
+    `role_id` char(6) not null ,
+    `resource_id` char(6) not null,
+    primary key (id)
+)engine=innodb default charset=utf8mb4;
