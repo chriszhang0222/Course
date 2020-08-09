@@ -49,4 +49,15 @@ public class RoleController {
         roleService.saveResource(roleDto);
         return roleDto;
     }
+
+    @PostMapping("/save-user")
+    public RoleDto saveUser(@RequestBody RoleDto roleDto){
+        roleService.saveUser(roleDto);
+        return roleDto;
+    }
+
+    @GetMapping("/list-user/{roleId}")
+    public List<String> listUser(@PathVariable String roleId){
+        return roleService.listUser(roleId);
+    }
 }

@@ -103,6 +103,59 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div>
+
+        <div id="user-modal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Role-User link settings</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <table id="user-table" class="table table-hover">
+                                    <tbody>
+                                    <tr v-for="user in users">
+                                        <td>{{user.loginName}}</td>
+                                        <td class="text-right">
+                                            <a v-on:click="addUser(user)" href="javascript:;" class="">
+                                                <i class="ace-icon fa fa-arrow-circle-right blue"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <table id="role-user-table" class="table table-hover">
+                                    <tbody>
+                                    <tr v-for="user in roleUsers">
+                                        <td>{{user.loginName}}</td>
+                                        <td class="text-right">
+                                            <a v-on:click="deleteUser(user)" href="javascript:;" class="">
+                                                <i class="ace-icon fa fa-trash blue"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white btn-default btn-round" data-dismiss="modal">
+                            <i class="ace-icon fa fa-times"></i>
+                            close
+                        </button>
+                        <button type="button" class="btn btn-white btn-info btn-round" v-on:click="saveUser()">
+                            <i class="ace-icon fa fa-plus blue"></i>
+                            save
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
     </div>
 </template>
 
@@ -256,6 +309,74 @@
                     }
                 });
             },
+            editUser(role){
+                this.role = $.extend({}, role);
+                this.listUser();
+                $('#user-modal').modal('show');
+            },
+            listUser(){
+              let vm = this;
+              vm.$ajax.post(vm.url + '/system/admin/user/list', {
+                  page: 1,
+                  size: 9999
+              }).then((res) => {
+                  let resp = res.data;
+                  if(resp.success){
+                      vm.users = resp.content.list;
+                      vm.listRoleUser();
+                  }else{
+                      Toast.warning(resp.message);
+                  }
+              })
+            },
+            listRoleUser(){
+              let vm = this;
+              vm.roleUsers = [];
+              vm.$ajax.get(vm.url + '/system/admin/role/list-user/' + vm.role.id)
+                .then((res) => {
+                    let resp = res.data;
+                    let userIds = resp.content;
+
+                    for(let i=0;i<userIds.length;i++){
+                        for(let j=0;j<vm.users.length;j++){
+                            if(vm.users[j].id === userIds[i]){
+                                vm.roleUsers.push(vm.users[j]);
+                            }
+                        }
+                    }
+                })
+            },
+            addUser(user){
+                for(let i=0;i<this.roleUsers.length;i++){
+                    if(user === this.roleUsers[i]){
+                        return;
+                    }
+                }
+                this.roleUsers.push(user);
+            },
+            deleteUser(user){
+                Tool.removeObj(this.roleUsers, user);
+            },
+            saveUser(){
+                let users = this.roleUsers;
+                let vm = this;
+                let userIds = [];
+                for(let i=0;i<users.length;i++){
+                    userIds.push(users[i].id);
+                }
+                vm.$ajax.post(vm.url + '/system/admin/role/save-user', {
+                    id: vm.role.id,
+                    userIds: userIds
+                }).then((res) => {
+                    let resp = res.data;
+                    if(resp.success){
+                        Toast.success('Success!');
+                    }else{
+                        Toast.warning(resp.message);
+                    }
+                    $('#user-modal').modal('hide');
+                })
+            }
         }
     }
 </script>

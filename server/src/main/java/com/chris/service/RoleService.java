@@ -1,13 +1,11 @@
 package com.chris.service;
 
-import com.chris.domain.Role;
-import com.chris.domain.RoleExample;
-import com.chris.domain.RoleResource;
-import com.chris.domain.RoleResourceExample;
+import com.chris.domain.*;
 import com.chris.dto.PageDto;
 import com.chris.dto.RoleDto;
 import com.chris.mapper.RoleMapper;
 import com.chris.mapper.RoleResourceMapper;
+import com.chris.mapper.RoleUserMapper;
 import com.chris.util.CopyUtil;
 import com.chris.util.UuidUtil;
 import com.github.pagehelper.PageHelper;
@@ -27,6 +25,9 @@ public class RoleService {
 
     @Resource
     private RoleResourceMapper roleResourceMapper;
+
+    @Resource
+    private RoleUserMapper roleUserMapper;
 
     public void list(PageDto pageDto) {
         PageHelper.startPage(pageDto.getPage(), pageDto.getSize());
@@ -90,6 +91,28 @@ public class RoleService {
             roleResource.setResourceId(id);
             roleResourceMapper.insert(roleResource);
         }
+    }
+
+    public void saveUser(RoleDto roleDto){
+        RoleUserExample example = new RoleUserExample();
+        example.createCriteria().andRoleIdEqualTo(roleDto.getId());
+        roleUserMapper.deleteByExample(example);
+        String roleId = roleDto.getId();
+        List<String> useridList = roleDto.getUserIds();
+        for(String id: useridList){
+            RoleUser roleUser = new RoleUser();
+            roleUser.setId(UuidUtil.getShortUuid());
+            roleUser.setRoleId(roleId);
+            roleUser.setUserId(id);
+            roleUserMapper.insert(roleUser);
+        }
+    }
+
+    public List<String> listUser(String roleId){
+        RoleUserExample example = new RoleUserExample();
+        example.createCriteria().andRoleIdEqualTo(roleId);
+        List<RoleUser> roleUserList = roleUserMapper.selectByExample(example);
+        return roleUserList.stream().map((r) -> r.getUserId()).collect(Collectors.toList());
     }
 
 }
