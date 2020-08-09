@@ -617,6 +617,12 @@
             if(!this.loginUser.loginName && !this.loginUser.name){
                 this.$router.push('/login');
             }
+            /*
+            * if no role exists, redirect to welcome page
+            * */
+            if(!this.hasResourceRouter(this.$route.name)){
+                this.$router.push("/welcome");
+            }
         },
         watch: {
             $route: {

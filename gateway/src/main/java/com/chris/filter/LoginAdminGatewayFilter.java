@@ -19,6 +19,7 @@ import reactor.core.publisher.Mono;
 import javax.annotation.Resource;
 
 @Component
+@Slf4j
 public class LoginAdminGatewayFilter implements GatewayFilter, Ordered {
 
 //    private static final Logger LOG = LoggerFactory.getLogger(LoginAdminGatewayFilter.class);
@@ -62,20 +63,20 @@ public class LoginAdminGatewayFilter implements GatewayFilter, Ordered {
             JSONObject loginUserDto = JSON.parseObject(String.valueOf(object));
             JSONArray requests = loginUserDto.getJSONArray("requests");
             // 遍历所有【权限请求】，判断当前请求的地址是否在【权限请求】里
-//            for (int i = 0, l = requests.size(); i < l; i++) {
-//                String request = (String) requests.get(i);
-//                if (path.contains(request)) {
-//                    exist = true;
-//                    break;
-//                }
-//            }
-//            if (exist) {
-////                LOG.info("权限校验通过");
-//            } else {
-////                LOG.warn("权限校验未通过");
-//                exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-//                return exchange.getResponse().setComplete();
-//            }
+            for (int i = 0, l = requests.size(); i < l; i++) {
+                String request = (String) requests.get(i);
+                if (path.contains(request)) {
+                    exist = true;
+                    break;
+                }
+            }
+            if (exist) {
+                log.info("权限校验通过");
+            } else {
+                log.warn("权限校验未通过");
+                exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+                return exchange.getResponse().setComplete();
+            }
 
             return chain.filter(exchange);
         }
