@@ -3,8 +3,11 @@ package com.chris.mapper;
 import com.chris.domain.RoleResource;
 import com.chris.domain.RoleResourceExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface RoleResourceMapper {
     long countByExample(RoleResourceExample example);
 

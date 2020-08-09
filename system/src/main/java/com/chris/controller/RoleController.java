@@ -43,4 +43,10 @@ public class RoleController {
     public List<String> listResource(@PathVariable String roleId){
         return roleService.listResource(roleId);
     }
+
+    @PostMapping("/save-resource")
+    public RoleDto saveResource(@RequestBody RoleDto roleDto){
+        roleService.saveResource(roleDto);
+        return roleDto;
+    }
 }

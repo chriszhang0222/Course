@@ -2,9 +2,12 @@ package com.chris.service;
 
 import com.chris.domain.Role;
 import com.chris.domain.RoleExample;
+import com.chris.domain.RoleResource;
+import com.chris.domain.RoleResourceExample;
 import com.chris.dto.PageDto;
 import com.chris.dto.RoleDto;
 import com.chris.mapper.RoleMapper;
+import com.chris.mapper.RoleResourceMapper;
 import com.chris.util.CopyUtil;
 import com.chris.util.UuidUtil;
 import com.github.pagehelper.PageHelper;
@@ -14,12 +17,16 @@ import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RoleService {
 
     @Resource
     private RoleMapper roleMapper;
+
+    @Resource
+    private RoleResourceMapper roleResourceMapper;
 
     public void list(PageDto pageDto) {
         PageHelper.startPage(pageDto.getPage(), pageDto.getSize());
@@ -63,7 +70,26 @@ public class RoleService {
     }
 
     public List<String> listResource(String roleId){
-        return null;
+        RoleResourceExample roleResourceExample = new RoleResourceExample();
+        roleResourceExample.createCriteria().andRoleIdEqualTo(roleId);
+        List<RoleResource> roleResourceList = roleResourceMapper.selectByExample(roleResourceExample);
+        return roleResourceList.stream().map((r) -> r.getResourceId()).collect(Collectors.toList());
+    }
+
+    public void saveResource(RoleDto roleDto){
+        String roleId = roleDto.getId();
+        List<String> resourceIds = roleDto.getResourceIds();
+        RoleResourceExample example = new RoleResourceExample();
+        example.createCriteria().andRoleIdEqualTo(roleId);
+        roleResourceMapper.deleteByExample(example);
+
+        for(String id: resourceIds){
+            RoleResource roleResource = new RoleResource();
+            roleResource.setId(UuidUtil.getShortUuid());
+            roleResource.setRoleId(roleId);
+            roleResource.setResourceId(id);
+            roleResourceMapper.insert(roleResource);
+        }
     }
 
 }

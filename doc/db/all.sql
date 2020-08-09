@@ -171,7 +171,7 @@ create table `role`(
 
 drop table if exists `role_resource`;
 create table `role_resource`(
-    `id` char(6) not null ,
+    `id` char(8) not null ,
     `role_id` char(6) not null ,
     `resource_id` char(6) not null,
     primary key (id)

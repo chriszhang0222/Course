@@ -234,7 +234,28 @@
                        vm.zTree.checkNode(node, true);
                    }
                 });
-            }
+            },
+            saveResource(){
+                let vm = this;
+                let resources = vm.zTree.getCheckedNodes();
+
+                let resourceIds = [];
+                for(let i=0;i<resources.length;i++){
+                    resourceIds.push(resources[i].id);
+                }
+                vm.$ajax.post(vm.url + '/system/admin/role/save-resource',{
+                    id: vm.role.id,
+                    resourceIds: resourceIds
+                }).then((res) => {
+                    let resp = res.data;
+                    if(resp.success){
+                        Toast.success("Saved Successfully!");
+                        $('#resource-modal').modal('hide');
+                    }else{
+                        Toast.warning(resp.message);
+                    }
+                });
+            },
         }
     }
 </script>
