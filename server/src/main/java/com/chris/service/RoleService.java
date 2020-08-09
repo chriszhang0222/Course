@@ -52,7 +52,7 @@ public class RoleService {
      * 新增
      */
     private void insert(Role role) {
-        role.setId(UuidUtil.getShortUuid());
+        role.setId(UuidUtil.getShortUuid().substring(0,6));
         roleMapper.insert(role);
     }
 
