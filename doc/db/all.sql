@@ -189,3 +189,11 @@ insert into role_resource values ('000006', '000000', '010201');
 
 insert into role_resource values ('000007', '000000', '0103');
 insert into role_resource values ('000008', '000000', '010301');
+
+drop table if exists `role_user`;
+create table `role_user`(
+    `id` char(8) not null ,
+    `role_id` char(8) not null ,
+    `user_id` char(8) not null,
+    primary key(id)
+)engine=innodb default charset=utf8mb4;
