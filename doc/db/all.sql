@@ -176,3 +176,16 @@ create table `role_resource`(
     `resource_id` char(6) not null,
     primary key (id)
 )engine=innodb default charset=utf8mb4;
+
+insert into role_resource values ('000000', '000000', '01');
+
+insert into role_resource values ('000001', '000000', '0101');
+insert into role_resource values ('000002', '000000', '010101');
+insert into role_resource values ('000003', '000000', '010102');
+insert into role_resource values ('000004', '000000', '010103');
+
+insert into role_resource values ('000005', '000000', '0102');
+insert into role_resource values ('000006', '000000', '010201');
+
+insert into role_resource values ('000007', '000000', '0103');
+insert into role_resource values ('000008', '000000', '010301');

@@ -8,6 +8,7 @@ import com.chris.util.ValidatorUtil;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 @RequestMapping("/admin/role")
@@ -36,5 +37,10 @@ public class RoleController {
     public CommonResponse delete(@PathVariable String id){
         roleService.delete(id);
         return new CommonResponse();
+    }
+
+    @GetMapping("/list-resource/{roleId}")
+    public List<String> listResource(@PathVariable String roleId){
+        return roleService.listResource(roleId);
     }
 }

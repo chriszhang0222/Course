@@ -62,4 +62,8 @@ public class RoleService {
         roleMapper.deleteByPrimaryKey(id);
     }
 
+    public List<String> listResource(String roleId){
+        return null;
+    }
+
 }
