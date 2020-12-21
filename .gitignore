@@ -10,6 +10,7 @@ node_modules
 .settings
 .springBeans
 .sts4-cache
+.DS_Store
 
 ### IntelliJ IDEA ###
 .idea
@@ -72,3 +73,4 @@ build/
 !/admin/public/ace/blank.html
 !/admin/public/ace/index.html
 !/admin/public/ace/search.html
+!/admin/public/zTree_v3/
